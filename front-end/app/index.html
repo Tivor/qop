@@ -45,24 +45,23 @@
 
     <div ng-include="'views/header.html'"></div>
 
-    <div id="initializing-panel"></div>
+        <div id="initializing-panel"></div>
 
-    <div id="content-outer">
+        <div id="content-outer">
 
+            <div login-panel></div>
+            <aside id="content" ng-view ng-show="isAuthenticated"></aside>
 
-        <div login-panel></div>
+        </div>
 
-        <aside id="content" ng-view ng-show="isAuthenticated"></aside>
-
-    </div>
-
-    <div ng-include="'views/footer.html'"></div>
+    <div ng-include="'views/footer.html'" ng-show="isAuthenticated"></div>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/json3/lib/json3.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -78,6 +77,7 @@
     <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
     <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
     <script src="bower_components/angular-ui-slider/src/slider.js"></script>
+    <script src="bower_components/angular-paging/paging.js"></script>
     <script src="bower_components/scrollup/dist/jquery.scrollUp.min.js"></script>
     <script src="bower_components/angularjs-toaster/toaster.js"></script>
     <script src="bower_components/angular-http-auth/src/http-auth-interceptor.js"></script>
@@ -101,6 +101,7 @@
 
     <!-- controllers -->
     <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/test.js"></script>
 
     <!-- endbuild -->
 </body>

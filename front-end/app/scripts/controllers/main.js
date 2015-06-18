@@ -20,6 +20,4 @@ angular.module('qopApp')
             }
         };
 
-
-
   });

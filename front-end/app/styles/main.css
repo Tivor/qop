@@ -2524,7 +2524,6 @@ h2.title {
   color: #FE980F;
 }
 
-
 .ui-slider-tick {
   position: absolute;
   background-color: #aaa;
@@ -2543,3 +2542,11 @@ h2.title {
   height: 100%;
 }
 
+a.active-option {
+    background-color: #FE980F;
+    padding: 15px;
+}
+
+div.filter {
+    padding: 15px;
+}

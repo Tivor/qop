@@ -18,12 +18,14 @@ var app = angular.module('qopApp', [
     'toaster',
     'ui.bootstrap',
     'ui.slider',
-    'sca-ngular'
+    'sca-ngular',
+    'brantwills.paging'
 ]);
 //configura rotas
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/', {templateUrl: 'views/main.html'})
+        .when('/test/:testcase/cat/:idcat', {templateUrl: 'views/test/test.html'})
         .when('/404', {templateUrl: 'views/404.html'})
         .when('/details', {templateUrl: 'views/product-details.html'})
         .otherwise({redirectTo: '/'});

@@ -1,0 +1,94 @@
+<section>
+    <div class="container" ng-controller="TestCtrl">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    <h2>Escolha uma categoria</h2>
+                    <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                        <div ng-repeat="cat in categories" class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"><a href="#/test/{{testCase}}/cat/{{cat.id}}" ng-class="idcat==cat.id ? 'active-option' : ''">{{cat.name}}</a></h4>
+                            </div>
+                        </div>
+                    </div><!--/category-products-->
+
+                    <h2>Refine sua busca</h2>
+                    <!--filter-->
+                    <div ng-repeat="feat in features">
+                        <h4>{{feat.name}} - {{feat.filterValue}}</h4>
+                        <div class="text-center filter" ng-if="feat.type == 1">
+                            <div ui-slider="feat.options" ng-model="features[$index].filterValue"></div>
+                            <b class="pull-left">{{feat.options.min}}</b> <b class="pull-right">{{feat.options.max}}</b>
+                        </div>
+
+                        <div class="filter" ng-if="feat.type == 2">
+                            <div class="clearfix" ng-repeat="opt in feat.options">
+                                <input type="checkbox" ng-model="features[$parent.$index].options[$index].filterValue"/><label>{{opt.desc}}</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!--/filter-->
+
+                </div>
+            </div>
+
+            <div class="col-sm-9 padding-right">
+
+                <div align="center">
+                    <paging class="large"
+                            page="page"
+                            page-size="pageSize"
+                            total="total"
+                            show-prev-next="true"
+                            paging-action="doPaging(page, pageSize, total)">
+                    </paging>
+                </div>
+
+                <div class="features_items"><!--features_items-->
+                    <h2 class="title text-center">Resultado</h2>
+                    <div ng-repeat="produto in produtosPaginados" class="col-sm-4">
+                        <div class="product-image-wrapper">
+                            <div class="single-products">
+                                <div class="productinfo text-center">
+                                    <img ng-src="images/home/product{{produto.id}}.jpg" alt="" />
+                                    <h2>{{produto.price | currency}}</h2>
+                                    <p>{{produto.name}}</p>
+                                    <a href="" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                </div>
+                                <div class="product-overlay">
+                                    <img ng-src="images/home/product{{produto.id}}.jpg" alt="" />
+                                    <div class="overlay-content">
+                                        <h2>{{produto.price | currency}}</h2>
+                                        <p>{{produto.name}}</p>
+                                        <a href="" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="choose">
+                                <ul class="nav nav-pills nav-justified">
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--features_items-->
+
+                <div align="center">
+                    <paging class="large"
+                            page="page"
+                            page-size="pageSize"
+                            total="total"
+                            show-prev-next="true"
+                            paging-action="doPaging(page, pageSize, total)">
+                    </paging>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
