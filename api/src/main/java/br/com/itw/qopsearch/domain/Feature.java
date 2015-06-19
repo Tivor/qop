@@ -37,8 +37,6 @@ import java.util.List;
 @Entity
 @Table(name = "feature")
 @SequenceGenerator(name = "sq_feature", sequenceName = "sq_feature")
-@Inheritance(strategy= InheritanceType.JOINED)
-@JsonIdentityInfo(generator=JSOGGenerator.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Setter
@@ -60,10 +58,6 @@ public class Feature extends BaseEntity<Long> {
     @Size(max = 2000)
     @Column(name = "description", nullable = false, length = 2000)
     String description;
-
-    @NotNull
-    @Column(name = "type_value", nullable = false)
-    Integer typeValue;
 
     @NotNull
     @Column(name = "type_measure", nullable = false)

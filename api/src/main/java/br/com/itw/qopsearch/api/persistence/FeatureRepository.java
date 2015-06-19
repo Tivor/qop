@@ -1,6 +1,8 @@
 package br.com.itw.qopsearch.api.persistence;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 import br.com.itw.commons.persistence.ICoreRepository;
 import br.com.itw.qopsearch.api.persistence.core.FeatureRepositoryCustom;
 import br.com.itw.qopsearch.domain.Feature;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface FeatureRepository extends JpaRepository<Feature, Long >, FeatureRepositoryCustom  {
+
+    List<Feature> findByCategoryId(Long idCat);
 
 
 }

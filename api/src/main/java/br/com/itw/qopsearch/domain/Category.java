@@ -18,7 +18,6 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "category")
 @SequenceGenerator(name = "sq_category", sequenceName = "sq_category")
-@JsonIdentityInfo(generator=JSOGGenerator.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Setter

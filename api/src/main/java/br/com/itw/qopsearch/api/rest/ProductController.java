@@ -17,7 +17,11 @@ import java.util.List;
 
 import br.com.itw.commons.rest.dto.Pagination;
 import br.com.itw.commons.rest.dto.SearchFilter;
+import br.com.itw.qopsearch.api.persistence.CategoryRepository;
+import br.com.itw.qopsearch.api.persistence.FeatureRepository;
 import br.com.itw.qopsearch.api.persistence.ProductRepository;
+import br.com.itw.qopsearch.domain.Category;
+import br.com.itw.qopsearch.domain.Feature;
 import br.com.itw.qopsearch.domain.Product;
 import br.com.itw.qopsearch.api.service.IProductService;
 import br.com.itw.qopsearch.domain.dto.FeatureFilter;
@@ -62,6 +66,12 @@ public class ProductController {
     @Resource
     private ProductRepository productRepository;
 
+    @Resource
+    private CategoryRepository categoryRepository;
+
+    @Resource
+    private FeatureRepository featureRepository;
+
     @RequestMapping(value = "/refine", method = RequestMethod.POST)
     public HttpEntity<ProductResult> refine(@RequestBody List<FeatureFilter> filter) {
 
@@ -83,6 +93,18 @@ public class ProductController {
         );
 
         return new HttpEntity(result);
+    }
+
+    @RequestMapping(value = "/getCategories", method = RequestMethod.GET)
+    public HttpEntity<List<Category>> getCategories() {
+
+        return new HttpEntity(categoryRepository.findAll());
+    }
+
+    @RequestMapping(value = "/getFeatures/{idCat}", method = RequestMethod.GET)
+    public HttpEntity<List<Feature>> getFeatures(@PathVariable Long idCat) {
+
+        return new HttpEntity(featureRepository.findByCategoryId(idCat));
     }
 
     @RequestMapping(value = "/download", method = RequestMethod.GET)

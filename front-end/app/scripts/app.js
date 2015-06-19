@@ -25,7 +25,7 @@ var app = angular.module('qopApp', [
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/', {templateUrl: 'views/main.html'})
-        .when('/test/:testcase/cat/:idcat', {templateUrl: 'views/test/test.html'})
+        .when('/test/:testcase', {templateUrl: 'views/test/test.html'})
         .when('/404', {templateUrl: 'views/404.html'})
         .when('/details', {templateUrl: 'views/product-details.html'})
         .otherwise({redirectTo: '/'});

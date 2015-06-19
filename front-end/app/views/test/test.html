@@ -1,53 +1,65 @@
 <section>
     <div class="container" ng-controller="TestCtrl">
+
+        <div class="category-tab"><!--category-tab-->
+            <div class="col-sm-1"></div>
+
+            <div class="col-sm-10">
+                <h3>Escolha uma categoria: </h3>
+                <ul class="nav nav-tabs">
+                    <li ng-repeat="cat in categories">
+                        <a ng-click="changeCategory({{cat.id}})">{{cat.name}}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-sm-1"></div>
+        </div>
+
         <div class="row">
             <div class="col-sm-3">
                 <div class="left-sidebar">
-                    <h2>Escolha uma categoria</h2>
-
-                    <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                        <div ng-repeat="cat in categories" class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title"><a href="#/test/{{testCase}}/cat/{{cat.id}}"
-                                                           ng-class="idcat==cat.id ? 'active-option' : ''">{{cat.name}}</a>
-                                </h4>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/category-products-->
-
-                    <h2>Refinar por:</h2>
-                    <button ng-click="refine()"><i class="fa fa-filter"></i></button>
+                    <h2 ng-if="idcat > 0">Refinar por:</h2>
+                    <!--<button ng-click="refine()"><i class="fa fa-filter"></i></button>-->
                     <!--filter-->
                     <div ng-repeat="feat in features">
+
+                        <hr>
                         <!-- Feature com RANGE {min & max} -->
-                        <div class="text-center filter" ng-if="feat.typeMeasure == 1">
-                            <h4>{{feat.name}} - Entre {{feat.filterValue[0] ? feat.filterValue[0] : feat.optionValues[0].valueOption}} e {{feat.filterValue[1] ? feat.filterValue[1] : feat.optionValues[1].valueOption}}</h4>
+                        <div class="text-center filter"
+                             ng-if="feat.typeMeasure == 1"
+                             ng-init="feat.filterValue = [feat.optionValues[0].valueOption, feat.optionValues[1].valueOption]">
+
+                            <h4>{{feat.name}}</h4>
+
                             <div ui-slider="{range: true}" ng-model="feat.filterValue"
                                  min="{{feat.optionValues[0].valueOption}}"
                                  max="{{feat.optionValues[1].valueOption}}"></div>
-                            <b class="pull-left">{{feat.optionValues[0].valueOption}}</b> <b class="pull-right">{{feat.optionValues[1].valueOption}}</b>
+                            <b class="pull-left">{{feat.filterValue[0]}}</b>
+                            <b class="pull-right">{{feat.filterValue[1]}}</b>
                         </div>
 
                         <!-- Feature com OPTIONS -->
                         <div class="filter" ng-if="feat.typeMeasure == 2">
-                            <h4>{{feat.name}} - {{feat.filterValue}}</h4>
-                            <div class="form-group clearfix" ng-repeat="opt in feat.optionValues">
-                                <input type="radio" ng-model="feat.filterValue" value="{{opt.id}}" /><label>{{opt.valueOption}}</label>
+                            <h4>{{feat.name}}</h4>
+
+                            <div class="group-option clearfix" ng-repeat="opt in feat.optionValues">
+                                <input type="radio" ng-model="feat.filterValue" value="{{opt.id}}"/><label
+                                    class="option"><h6>{{opt.valueOption}}</h6></label>
                             </div>
                         </div>
 
                         <!-- Caso específico de Necessidades -->
                         <div class="text-center filter" ng-if="feat.typeMeasure == 3">
-                            <h4>{{feat.name}} - {{feat.filterValue}}%</h4>
+                            <h4>{{feat.name}}</h4>
+
                             <div ui-slider ng-model="feat.filterValue"
                                  min="0"
                                  max="100"></div>
-                            <b class="pull-left">0%</b> <b class="pull-right">100%</b>
+                            <b class="pull-left">{{feat.filterValue}}%</b> <b class="pull-right">100%</b>
                         </div>
 
                     </div>
-
 
                     <!--/filter-->
 
@@ -67,7 +79,7 @@
                 </div>
 
                 <div class="features_items"><!--features_items-->
-                    <h2 class="title text-center">Resultado</h2>
+                    <!--<h2 class="title text-center">Resultado</h2>-->
 
                     <div ng-repeat="product in productPage" class="col-sm-4">
                         <div class="product-image-wrapper">

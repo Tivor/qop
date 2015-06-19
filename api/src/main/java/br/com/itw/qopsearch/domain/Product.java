@@ -39,7 +39,6 @@ import java.util.List;
 @Entity
 @Table(name = "product")
 @SequenceGenerator(name = "sq_product", sequenceName = "sq_product")
-@JsonIdentityInfo(generator=JSOGGenerator.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Setter
