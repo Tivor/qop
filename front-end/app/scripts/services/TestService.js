@@ -9,11 +9,11 @@
  */
 
 
-angular.module('custeioApp').factory('Controle', function ($resource) {
-    return $resource('/qop/api/Controle/:id', {}, {
-        'findAtivosByGrupo': { method: 'GET', url: '/cliq/api/Controle/findAtivosByGrupo'},
-        'calculaTotais': { method: 'POST', url: '/cliq/api/Controle/calculaTotais'},
-        'hasPendencia': { method: 'POST', url: '/cliq/api/Controle/hasPendencia'},
-        'historicoLancamentos': {method: 'GET', url:'/cliq/api/Controle/historicoLancamentoValores/:medidor', params:{medidor:'@medidor'}, isArray: true}
+angular.module('qopApp').factory('Test', function ($resource) {
+    return $resource('/qopsearch/api/Product/:id', {}, {
+//        'hasPendencia': { method: 'POST', url: '/cliq/api/Controle/hasPendencia'},
+//        'historicoLancamentos': {method: 'GET', url:'/cliq/api/Controle/historicoLancamentoValores/:medidor', params:{medidor:'@medidor'}, isArray: true},
+        'findAllByCategory': { method: 'GET', url: '/qopsearch/api/Product/findAll/:idcat/:testcase', params:{idcat:'@idcat', testcase:'@testcase'}},
+        'refine': { method: 'POST', url: '/qopsearch/api/Product/refine'}
     });
 });

@@ -32,10 +32,6 @@ public class ValueFeature extends BaseEntity<Long> {
     private Long id;
 
     @NotNull
-    @Column(name = "cod_value", nullable = false)
-    Integer codValue;
-
-    @NotNull
     @Column(name = "value_option", nullable = false)
     String valueOption;
 

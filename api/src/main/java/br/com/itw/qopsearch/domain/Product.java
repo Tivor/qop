@@ -76,6 +76,10 @@ public class Product extends BaseEntity<Long> {
     @JoinColumn(name = "id_category", nullable = false)
     private Category category;
 
+    @NotNull
+    @Column(name = "test_case", nullable = false)
+    Integer testCase;
+
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
     private List<ProductFeature> productFeatureCollection;

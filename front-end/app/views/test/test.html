@@ -4,27 +4,46 @@
             <div class="col-sm-3">
                 <div class="left-sidebar">
                     <h2>Escolha uma categoria</h2>
+
                     <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                         <div ng-repeat="cat in categories" class="panel panel-default">
                             <div class="panel-heading">
-                                <h4 class="panel-title"><a href="#/test/{{testCase}}/cat/{{cat.id}}" ng-class="idcat==cat.id ? 'active-option' : ''">{{cat.name}}</a></h4>
+                                <h4 class="panel-title"><a href="#/test/{{testCase}}/cat/{{cat.id}}"
+                                                           ng-class="idcat==cat.id ? 'active-option' : ''">{{cat.name}}</a>
+                                </h4>
                             </div>
                         </div>
-                    </div><!--/category-products-->
+                    </div>
+                    <!--/category-products-->
 
-                    <h2>Refine sua busca</h2>
+                    <h2>Refinar por:</h2>
+                    <button ng-click="refine()"><i class="fa fa-filter"></i></button>
                     <!--filter-->
                     <div ng-repeat="feat in features">
-                        <h4>{{feat.name}} - {{feat.filterValue}}</h4>
-                        <div class="text-center filter" ng-if="feat.type == 1">
-                            <div ui-slider="feat.options" ng-model="features[$index].filterValue"></div>
-                            <b class="pull-left">{{feat.options.min}}</b> <b class="pull-right">{{feat.options.max}}</b>
+                        <!-- Feature com RANGE {min & max} -->
+                        <div class="text-center filter" ng-if="feat.typeMeasure == 1">
+                            <h4>{{feat.name}} - Entre {{feat.filterValue[0] ? feat.filterValue[0] : feat.optionValues[0].valueOption}} e {{feat.filterValue[1] ? feat.filterValue[1] : feat.optionValues[1].valueOption}}</h4>
+                            <div ui-slider="{range: true}" ng-model="feat.filterValue"
+                                 min="{{feat.optionValues[0].valueOption}}"
+                                 max="{{feat.optionValues[1].valueOption}}"></div>
+                            <b class="pull-left">{{feat.optionValues[0].valueOption}}</b> <b class="pull-right">{{feat.optionValues[1].valueOption}}</b>
                         </div>
 
-                        <div class="filter" ng-if="feat.type == 2">
-                            <div class="clearfix" ng-repeat="opt in feat.options">
-                                <input type="checkbox" ng-model="features[$parent.$index].options[$index].filterValue"/><label>{{opt.desc}}</label>
+                        <!-- Feature com OPTIONS -->
+                        <div class="filter" ng-if="feat.typeMeasure == 2">
+                            <h4>{{feat.name}} - {{feat.filterValue}}</h4>
+                            <div class="form-group clearfix" ng-repeat="opt in feat.optionValues">
+                                <input type="radio" ng-model="feat.filterValue" value="{{opt.id}}" /><label>{{opt.valueOption}}</label>
                             </div>
+                        </div>
+
+                        <!-- Caso específico de Necessidades -->
+                        <div class="text-center filter" ng-if="feat.typeMeasure == 3">
+                            <h4>{{feat.name}} - {{feat.filterValue}}%</h4>
+                            <div ui-slider ng-model="feat.filterValue"
+                                 min="0"
+                                 max="100"></div>
+                            <b class="pull-left">0%</b> <b class="pull-right">100%</b>
                         </div>
 
                     </div>
@@ -49,33 +68,42 @@
 
                 <div class="features_items"><!--features_items-->
                     <h2 class="title text-center">Resultado</h2>
-                    <div ng-repeat="produto in produtosPaginados" class="col-sm-4">
+
+                    <div ng-repeat="product in productPage" class="col-sm-4">
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img ng-src="images/home/product{{produto.id}}.jpg" alt="" />
-                                    <h2>{{produto.price | currency}}</h2>
-                                    <p>{{produto.name}}</p>
-                                    <a href="" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    <img ng-src="images/products/{{product.image}}" alt=""/>
+
+                                    <h2>{{product.price | currency}}</h2>
+
+                                    <p>{{product.name}}</p>
+                                    <a href="" class="btn btn-default add-to-cart">
+                                        <i class="fa fa-shopping-cart"></i>Adicionar ao carrinho
+                                    </a>
                                 </div>
                                 <div class="product-overlay">
-                                    <img ng-src="images/home/product{{produto.id}}.jpg" alt="" />
+                                    <img ng-src="images/products/{{product.image}}" alt=""/>
+
                                     <div class="overlay-content">
-                                        <h2>{{produto.price | currency}}</h2>
-                                        <p>{{produto.name}}</p>
-                                        <a href="" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        <h2>{{product.price | currency}}</h2>
+
+                                        <p>{{product.name}}</p>
+                                        <a href="" class="btn btn-default add-to-cart"><i
+                                                class="fa fa-shopping-cart"></i>Adicionar ao carrinho</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="choose">
                                 <ul class="nav nav-pills nav-justified">
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Lista de Desejos</a></li>
+                                    <li><a href=""><i class="fa fa-plus-square"></i>Comparar</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                </div><!--features_items-->
+                </div>
+                <!--features_items-->
 
                 <div align="center">
                     <paging class="large"

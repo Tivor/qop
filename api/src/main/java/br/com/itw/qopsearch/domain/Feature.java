@@ -66,17 +66,27 @@ public class Feature extends BaseEntity<Long> {
     Integer typeValue;
 
     @NotNull
-    @Column(name = "cod_value", nullable = false)
-    Integer codValue;
-
-    @NotNull
     @Column(name = "type_measure", nullable = false)
     Long typeMeasure;
 
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "id_category", nullable = false)
+    private Category category;
 
+    @NotNull
+    @Column(name = "test_case", nullable = false)
+    Integer testCase;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "feature")
     private List<ProductFeature> productFeatureCollection;
+
+    @ManyToMany
+    @JoinTable(
+            name="value_group",
+            joinColumns={@JoinColumn(name="id_feature", referencedColumnName="id")},
+            inverseJoinColumns={@JoinColumn(name="id_value", referencedColumnName="id")})
+    private List<ValueFeature> optionValues;
 
 }

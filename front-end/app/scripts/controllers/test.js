@@ -7,11 +7,13 @@
  * Controller of the sbAdminApp
  */
 angular.module('qopApp')
-  .controller('TestCtrl', function($scope, $routeParams) {
+  .controller('TestCtrl', function($scope, $routeParams, Test) {
 
         $scope.testCase = $routeParams.testcase;
-
         $scope.idcat = $routeParams.idcat;
+
+        $scope.products = [];
+        $scope.productIds = [];
 
         $scope.categories = [
             {id : 1, name : 'Categoria 1'},
@@ -24,41 +26,45 @@ angular.module('qopApp')
         ];
 
         $scope.features = [
-            {name : 'Feature 1', filterValue : null, type : 1,
-                options: {min: 15, max: 75}},
-            {name : 'Feature 2', filterValue : null, type : 2,
-            options: [{desc : 'Muito Bom'}, {desc : 'Bom'}, {desc : 'Médio'}, {desc : 'Ruim'}]},
-            {name : 'Feature 3', filterValue : null, type : 1,
-            options: {min: 15, max: 75}},
-            {name : 'Feature 4', filterValue : null, type : 2,
-            options: {min: 15, max: 75}},
-            {name : 'Feature 5', filterValue : null, type : 2,
-            options: {min: 15, max: 75}},
-            {name : 'Feature 6', filterValue : null, type : 1,
-                options: {min: 15, max: 75}}
+            {name : 'Feature 1', typeMeasure : 1,
+                optionValues: [{valueOption : 15}, {valueOption : 75}]},
+            {name : 'Feature 2', typeMeasure : 2,
+                optionValues: [{id: 1, valueOption : 'Bom'}, {id: 2, valueOption : 'Médio'}, {id: 3, valueOption : 'Ruim'}]},
+            {name : 'Feature 3', typeMeasure : 1,
+                optionValues: [{valueOption : 15}, {valueOption : 75}]},
+            {name : 'Feature 4', typeMeasure : 2,
+                optionValues: [{id: 4, valueOption : 15}, {id: 5, valueOption : 75}]},
+            {name : 'Feature 5', typeMeasure : 2,
+                optionValues: [{id: 6, valueOption : 15}, {id: 7, valueOption : 75}]},
+            {name : 'Feature 6', typeMeasure : 1,
+                optionValues: [{valueOption : 15}, {valueOption : 75}]}
         ];
 
-         $scope.produtosPaginados = [];
+        $scope.refine = function(){
+            Test.refine($scope.features);
+        };
+
+         $scope.productPage = [];
          $scope.page = 1;
          $scope.pageSize = 6;
 
-          $scope.filterProducts = function() {
-            $scope.todos = [];
-            for (var i=1;i<=12;i++) {
-                var price = 23.45 * i;
-              $scope.todos.push({ id:i, name:"Produto_" + i, price: price});
-            }
-            $scope.total = $scope.todos.length;
-          };
-          $scope.filterProducts();
-
-          $scope.doPaging = function(page, pageSize, total){
+          $scope.doPaging = function(page, pageSize){
               var begin = ((page - 1) * pageSize);
               var end = begin + pageSize;
-              $scope.produtosPaginados = $scope.todos.slice(begin, end);
+              $scope.productPage = $scope.products.slice(begin, end);
           };
 
-          $scope.doPaging($scope.page, $scope.pageSize, $scope.total);
 
+          $scope.findAll = function() {
 
+              if ($scope.idcat)
+                  Test.findAllByCategory({idcat: $scope.idcat, testcase: $scope.testCase}, function(response){
+                    $scope.productIds = response.selectedProducts;
+                    $scope.products = response.refinementResult;
+                    $scope.total = $scope.productIds.length;
+                    $scope.doPaging($scope.page, $scope.pageSize);
+                  });
+          }
+
+          $scope.findAll();
   });

@@ -13,11 +13,15 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import br.com.itw.commons.rest.dto.Pagination;
 import br.com.itw.commons.rest.dto.SearchFilter;
+import br.com.itw.qopsearch.api.persistence.ProductRepository;
 import br.com.itw.qopsearch.domain.Product;
 import br.com.itw.qopsearch.api.service.IProductService;
+import br.com.itw.qopsearch.domain.dto.FeatureFilter;
+import br.com.itw.qopsearch.domain.dto.ProductResult;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import org.slf4j.Logger;
@@ -55,77 +59,30 @@ public class ProductController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
-    @Resource(name = "productService")
-    private IProductService productService;
+    @Resource
+    private ProductRepository productRepository;
+
+    @RequestMapping(value = "/refine", method = RequestMethod.POST)
+    public HttpEntity<ProductResult> refine(@RequestBody List<FeatureFilter> filter) {
+
+        System.out.println(filter);
+
+        return null;
+    }
 
     /**
      * Returns an full, but Paged, list of all entities (Product)
-     * @param pagination
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
-    public HttpEntity<Page<Product>> findAll(Pagination pagination) {
-        return new HttpEntity(productService.findAll(pagination.getPageable()));
-    }
+    @RequestMapping(value = "/findAll/{idCat}/{testCase}", method = RequestMethod.GET)
+    public HttpEntity<ProductResult> findAll(@PathVariable Long idCat, @PathVariable Integer testCase) {
 
-    /**
-     * Returns a paged and filtered list with an given example (ignoring relationship examples beyond id)
-     * @param filter
-     * @return
-     */
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public HttpEntity<Page<Product>> search(@RequestBody SearchFilter<Product> filter) {
-        return new ResponseEntity(productService.search(filter.getContent() , filter.getPageable()), HttpStatus.OK);
-    }
+        ProductResult result = new ProductResult(
+                productRepository.findIdsByCategoryAndTestCase(idCat, testCase),
+                productRepository.findByCategoryIdAndTestCase(idCat, testCase)
+        );
 
-    /**
-     * Request first page of a text based search on all fields ignoring associations
-     * @param text
-     * @return
-     */
-    @RequestMapping(value = "/searchText", method = RequestMethod.GET)
-    public HttpEntity<Page<Product>> searchTextGet(String text) {
-        return new HttpEntity(productService.searchText(text , DEFAULT_PAGE ));
-    }
-    /**
-     * Returns a paged and filtered list with an given example (ignoring relationship examples beyond id)
-     * @param filter
-     * @return
-     */
-    @RequestMapping(value = "/searchText", method = RequestMethod.POST)
-    public HttpEntity<Page<Product>> searchText(@RequestBody SearchFilter<String> filter) {
-        return new HttpEntity(productService.searchText(filter.getContent() , filter.getPageable()));
-    }
-    /**
-     * Return an entity,Product ,with an Given ID
-     * @param id
-     * @return
-     */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public HttpEntity<Product> get(@PathVariable Long id) {
-        return new HttpEntity<>(productService.findOne(id));
-    }
-
-    /**
-     * Deletes an entity with an given ID
-     * @param id
-     * @return
-     */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public HttpEntity delete(@PathVariable Long id) {
-        productService.delete(id);
-        return new HttpEntity(null);
-    }
-
-    /**
-     * Simple save or update an entity
-     * @param product
-     * @return
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public HttpEntity<Product> save(@RequestBody Product product) {
-        productService.save(product);
-        return new HttpEntity<Product>(product);
+        return new HttpEntity(result);
     }
 
     @RequestMapping(value = "/download", method = RequestMethod.GET)
