@@ -79,7 +79,6 @@ public class Product extends BaseEntity<Long> {
     @Column(name = "test_case", nullable = false)
     Integer testCase;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
     private List<ProductFeature> productFeatureCollection;
 

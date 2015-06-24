@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,13 +20,17 @@ import br.com.itw.commons.rest.dto.Pagination;
 import br.com.itw.commons.rest.dto.SearchFilter;
 import br.com.itw.qopsearch.api.persistence.CategoryRepository;
 import br.com.itw.qopsearch.api.persistence.FeatureRepository;
+import br.com.itw.qopsearch.api.persistence.LogRepository;
 import br.com.itw.qopsearch.api.persistence.ProductRepository;
+import br.com.itw.qopsearch.domain.AccessLog;
 import br.com.itw.qopsearch.domain.Category;
 import br.com.itw.qopsearch.domain.Feature;
 import br.com.itw.qopsearch.domain.Product;
 import br.com.itw.qopsearch.api.service.IProductService;
 import br.com.itw.qopsearch.domain.dto.FeatureFilter;
 import br.com.itw.qopsearch.domain.dto.ProductResult;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import org.slf4j.Logger;
@@ -40,6 +45,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -71,6 +78,25 @@ public class ProductController {
 
     @Resource
     private FeatureRepository featureRepository;
+
+    @Resource
+    private LogRepository logRepository;
+
+    @RequestMapping(value = "/log", method = RequestMethod.POST)
+    public ResponseEntity log(@RequestBody HashMap params) throws JsonProcessingException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(params);
+
+        AccessLog accessLog = new AccessLog();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        accessLog.setLogin(principal.toString());
+        accessLog.setParams(json);
+        accessLog.setRegister(Calendar.getInstance().getTime());
+
+        logRepository.save(accessLog);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/refine", method = RequestMethod.POST)
     public HttpEntity<ProductResult> refine(@RequestBody List<FeatureFilter> filter) {

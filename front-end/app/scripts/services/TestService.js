@@ -16,6 +16,7 @@ angular.module('qopApp').factory('Test', function ($resource) {
         'findAllByCategory': { method: 'GET', url: '/qopsearch/api/Product/findAll/:idcat/:testcase', params:{idcat:'@idcat', testcase:'@testcase'}},
         'getCategories': { method: 'GET', url: '/qopsearch/api/Product/getCategories', isArray: true},
         'getFeatures': { method: 'GET', url: '/qopsearch/api/Product/getFeatures/:idcat', params:{idcat:'@idcat'}, isArray: true},
-        'refine': { method: 'POST', url: '/qopsearch/api/Product/refine'}
+        'refine': { method: 'POST', url: '/qopsearch/api/Product/refine'},
+        'log': { method: 'POST', url: '/qopsearch/api/Product/log'}
     });
 });

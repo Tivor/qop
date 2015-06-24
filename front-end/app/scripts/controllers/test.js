@@ -7,7 +7,7 @@
  * Controller of the sbAdminApp
  */
 angular.module('qopApp')
-  .controller('TestCtrl', function($scope, $routeParams, Test) {
+  .controller('TestCtrl', function($scope, $routeParams, Test, toaster, $filter, $modal) {
 
         $scope.testCase = $routeParams.testcase;
 
@@ -18,43 +18,29 @@ angular.module('qopApp')
             $scope.categories = response;
         });
 
-        $scope.features = [];
-         /*[
-            {name : 'Feature 1', typeMeasure : 1,
-                optionValues: [{valueOption : 15}, {valueOption : 75}]},
-            {name : 'Feature 2', typeMeasure : 2,
-                optionValues: [{id: 1, valueOption : 'Bom'}, {id: 2, valueOption : 'Médio'}, {id: 3, valueOption : 'Ruim'}]},
-            {name : 'Feature 3', typeMeasure : 1,
-                optionValues: [{valueOption : 15}, {valueOption : 75}]},
-            {name : 'Feature 4', typeMeasure : 2,
-                optionValues: [{id: 4, valueOption : 15}, {id: 5, valueOption : 75}]},
-            {name : 'Feature 5', typeMeasure : 2,
-                optionValues: [{id: 6, valueOption : 15}, {id: 7, valueOption : 75}]},
-            {name : 'Feature 6', typeMeasure : 1,
-                optionValues: [{valueOption : 15}, {valueOption : 75}]}
-        ];*/
-
         $scope.refine = function(){
             Test.refine($scope.features);
         };
 
         $scope.changeCategory = function(idcat){
+           var oldValue = $scope.idcat;
+
            $scope.idcat = idcat;
            $scope.findAll();
            $scope.findFeatures();
+           Test.log({op : 'changeCategory', oldValue: oldValue, newValue: idcat});
         };
-
 
          $scope.productPage = [];
          $scope.page = 1;
          $scope.pageSize = 15;
 
-          $scope.doPaging = function(page, pageSize){
+          $scope.doPaging = function(page, pageSize, doLog){
               var begin = ((page - 1) * pageSize);
               var end = begin + pageSize;
               $scope.productPage = $scope.products.slice(begin, end);
+              if(doLog) Test.log({op : 'doPaging', tPage: page})
           };
-
 
           $scope.findAll = function() {
 
@@ -63,7 +49,7 @@ angular.module('qopApp')
                     $scope.productIds = response.selectedProducts;
                     $scope.products = response.refinementResult;
                     $scope.total = $scope.productIds.length;
-                    $scope.doPaging($scope.page, $scope.pageSize);
+                    $scope.doPaging($scope.page, $scope.pageSize, false);
                   });
           }
 
@@ -77,5 +63,92 @@ angular.module('qopApp')
                     });
             }
 
-            $scope.findFeatures();
+          $scope.findFeatures();
+
+          Test.log({op: 'newTest', testCase: $scope.testCase});
+
+          function shuffle() {
+
+                $scope.products = $filter('orderBy')($scope.products, function() {return 0.5 - Math.random();});
+                $scope.page = 1;
+                $scope.doPaging($scope.page, $scope.pageSize, true);
+          }
+
+          $scope.changeFilterRange = function(event, ui){
+
+            shuffle();
+            Test.log({op: 'changeFilterRange',
+                        feature: $scope.features[ui.handle.parentNode.id],
+                        values: ui.values});
+          };
+
+            $scope.changeFilterOptions = function(feature, value){
+
+                shuffle();
+                Test.log({op: 'changeFilterOptions',
+                              feature: feature,
+                              value: value});
+            };
+
+
+          $scope.changeFilterNeeds = function(event, ui){
+              shuffle();
+              Test.log({op: 'changeFilterNeeds',
+                          feature: $scope.features[ui.handle.parentNode.id],
+                          value: ui.value});
+          };
+
+            $scope.addToCart = function(product) {
+              Test.log({op: 'addToCart', product: product});
+              toaster.pop('success', 'Sucesso', 'Produto adicionado ao carrinho');
+            };
+
+            $scope.addToWishlist = function(product) {
+              Test.log({op: 'addToWishlist', product: product});
+              toaster.pop('success', 'Sucesso', 'Produto adicionado a lista de desejos');
+            };
+
+            $scope.showDetails = function(selectedProduct) {
+              Test.log({op: 'showDetails', product: selectedProduct});
+              $scope.openModalDetail(selectedProduct);
+            };
+
+
+
+
+            $scope.openModalDetail = function (selectedProduct) {
+
+                var modalInstance = $modal.open({
+                  animation: true,
+                  templateUrl: 'productDetail.html',
+                  controller: 'ModalInstanceCtrl',
+                  size: 'lg',
+                  resolve: {
+                    selectedProduct: function () {
+                      return selectedProduct;
+                    }
+                  }
+                });
+            };
+
+
+  });
+
+  angular.module('qopApp').controller('ModalInstanceCtrl', function ($scope, $modalInstance, Test, toaster, selectedProduct) {
+
+    $scope.selectedProduct = selectedProduct;
+
+
+    $scope.addToCartDetail = function(){
+        Test.log({op: 'addToCartDetail', product: $scope.selectedProduct});
+        toaster.pop('success', 'Sucesso', 'Produto adicionado ao carrinho');
+    }
+
+    $scope.ok = function () {
+      $modalInstance.close();
+    };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
   });

@@ -41,15 +41,11 @@ public class AccessLog extends BaseEntity<Long> {
     String login;
 
     @NotNull
-    @Column(name = "filter")
-    String filter;
+    @Column(name = "params")
+    String params;
 
     @NotNull
-    @Column(name = "test_case")
-    private Integer test_case;
-
-    @NotNull
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "register", nullable = false)
     private Date register;
 

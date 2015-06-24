@@ -59,6 +59,9 @@ public class Feature extends BaseEntity<Long> {
     @Column(name = "description", nullable = false, length = 2000)
     String description;
 
+    @Column(name = "text_measure")
+    String textMeasure;
+
     @NotNull
     @Column(name = "type_measure", nullable = false)
     Long typeMeasure;

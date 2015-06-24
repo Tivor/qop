@@ -20,7 +20,6 @@
             <div class="col-sm-3">
                 <div class="left-sidebar">
                     <h2 ng-if="idcat > 0">Refinar por:</h2>
-                    <!--<button ng-click="refine()"><i class="fa fa-filter"></i></button>-->
                     <!--filter-->
                     <div ng-repeat="feat in features">
 
@@ -29,38 +28,36 @@
                         <div class="text-center filter"
                              ng-if="feat.typeMeasure == 1"
                              ng-init="feat.filterValue = [feat.optionValues[0].valueOption, feat.optionValues[1].valueOption]">
-
                             <h4>{{feat.name}}</h4>
 
-                            <div ui-slider="{range: true}" ng-model="feat.filterValue"
+                            <div id="{{$index}}" ui-slider="{range: true, stop: changeFilterRange}" ng-model="feat.filterValue"
                                  min="{{feat.optionValues[0].valueOption}}"
                                  max="{{feat.optionValues[1].valueOption}}"></div>
-                            <b class="pull-left">{{feat.filterValue[0]}}</b>
-                            <b class="pull-right">{{feat.filterValue[1]}}</b>
+                            <b class="pull-left">{{feat.filterValue[0]}} {{feat.textMeasure}}</b>
+                            <b class="pull-right">{{feat.filterValue[1]}} {{feat.textMeasure}}</b>
                         </div>
 
                         <!-- Feature com OPTIONS -->
                         <div class="filter" ng-if="feat.typeMeasure == 2">
-                            <h4>{{feat.name}}</h4>
+                            <h4>{{feat.name}} {{feat.textMeasure}}</h4>
 
                             <div class="group-option clearfix" ng-repeat="opt in feat.optionValues">
-                                <input type="radio" ng-model="feat.filterValue" value="{{opt.id}}"/><label
+                                <input id="{{$index}}" type="radio" ng-model="feat.filterValue" ng-change="changeFilterOptions(feat,opt.id)" value="{{opt.id}}"/><label
                                     class="option"><h6>{{opt.valueOption}}</h6></label>
                             </div>
                         </div>
 
                         <!-- Caso específico de Necessidades -->
                         <div class="text-center filter" ng-if="feat.typeMeasure == 3">
-                            <h4>{{feat.name}}</h4>
+                            <h4>{{feat.name}} (%)</h4>
 
-                            <div ui-slider ng-model="feat.filterValue"
+                            <div id="{{$index}}" ui-slider="{stop: changeFilterNeeds}" ng-model="feat.filterValue"
                                  min="0"
                                  max="100"></div>
                             <b class="pull-left">{{feat.filterValue}}%</b> <b class="pull-right">100%</b>
                         </div>
 
                     </div>
-
                     <!--/filter-->
 
                 </div>
@@ -74,7 +71,7 @@
                             page-size="pageSize"
                             total="total"
                             show-prev-next="true"
-                            paging-action="doPaging(page, pageSize, total)">
+                            paging-action="doPaging(page, pageSize, true)">
                     </paging>
                 </div>
 
@@ -90,7 +87,7 @@
                                     <h2>{{product.price | currency}}</h2>
 
                                     <p>{{product.name}}</p>
-                                    <a href="" class="btn btn-default add-to-cart">
+                                    <a href="" class="btn btn-default add-to-cart" ng-click="addToCart(product)">
                                         <i class="fa fa-shopping-cart"></i>Adicionar ao carrinho
                                     </a>
                                 </div>
@@ -101,7 +98,7 @@
                                         <h2>{{product.price | currency}}</h2>
 
                                         <p>{{product.name}}</p>
-                                        <a href="" class="btn btn-default add-to-cart"><i
+                                        <a href="" class="btn btn-default add-to-cart" ng-click="addToCart(product)"><i
                                                 class="fa fa-shopping-cart"></i>Adicionar ao carrinho</a>
                                     </div>
                                 </div>
@@ -124,8 +121,8 @@
                                 </div>
                                 <div class="row">
                                     <ul class="nav nav-pills nav-justified">
-                                        <li><a href=""><i class="fa fa-plus-square"></i>Lista de Desejos</a></li>
-                                        <li><a href=""><i class="fa fa-tasks"></i>Detalhes</a></li>
+                                        <li><a href="" ng-click="addToWishlist(product)"><i class="fa fa-plus-square"></i>Lista de Desejos</a></li>
+                                        <li><a href="" ng-click="showDetails(product)"><i class="fa fa-tasks"></i>Detalhes</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -147,5 +144,60 @@
 
 
         </div>
+        <script type="text/ng-template" id="productDetail.html">
+            <div class="modal-header">
+                <h3 class="modal-title">Detalhe do Produto</h3>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 padding-right">
+                    <div class="product-details"><!--product-details-->
+                        <div class="col-sm-4">
+                            <div class="view-product">
+                                <img ng-src="images/products/{{selectedProduct.image}}" alt="">
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="product-information"><!--/product-information-->
+                                <h2>{{product.name}}</h2>
+                                <p>ID: #00PZ{{selectedProduct.id}}</p>
+                                <img src="images/product-details/rating.png" alt="">
+								<span>
+									<span>{{selectedProduct.price | currency}}</span>
+									<label>Quantidade:</label>
+									<input type="text" value="3">
+									<button type="button" ng-click="addToCartDetail()" class="btn btn-fefault cart">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        Adicionar
+                                    </button>
+								</span>
+                                <p><b>Disponibilidade:</b> Em estoque</p>
+                                <p><b>Condição:</b> Novo</p>
+                                <p><b>Marca:</b> E-SHOPPER</p>
+                                <a href=""><img src="images/product-details/share.png" class="share img-responsive" alt=""></a>
+                            </div><!--/product-information-->
+                        </div>
+                    </div><!--/product-details-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 padding-right">
+                    <div class="product-details"><!--product-details-->
+                        <div class="col-sm-12">
+                            <ul>
+                                <li ng-repeat="feature in selectedProduct.productFeatureCollection">
+                                    <p ng-if="feature.feature.typeMeasure == 1">{{feature.feature.name}}: {{feature.value}} {{feature.feature.textMeasure}}</p>
+                                    <p ng-if="feature.feature.typeMeasure == 2">{{feature.feature.name}}: {{feature.feature.optionValues | option:feature.value}} {{feature.feature.textMeasure}}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div><!--/product-details-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button class="pull-right btn btn-warning" ng-click="cancel()">Cancel</button>
+                </div>
+            </div>
+        </script>
     </div>
 </section>
