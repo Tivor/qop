@@ -409,14 +409,21 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('build', [
-    'clean:dist',
-    'concurrent:dist',
-    'copy:dist',
-    'cssmin',
-    'ngAnnotate',
-    'uglify',
-    'htmlmin'
-  ]);
+      'clean:dist',
+      'wiredep',
+      'useminPrepare',
+  	  'copy:styles',
+      'concurrent:dist',
+      'autoprefixer',
+      'concat',
+      'ngAnnotate',
+      'copy:dist',
+      'cssmin',
+      'uglify',
+      'filerev',
+      'usemin',
+      'htmlmin'
+    ]);
 
   grunt.registerTask('default', [
     'newer:jshint',
