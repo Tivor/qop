@@ -11,10 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import br.com.itw.commons.rest.dto.Pagination;
 import br.com.itw.commons.rest.dto.SearchFilter;
@@ -29,6 +26,7 @@ import br.com.itw.qopsearch.domain.Product;
 import br.com.itw.qopsearch.api.service.IProductService;
 import br.com.itw.qopsearch.domain.dto.FeatureFilter;
 import br.com.itw.qopsearch.domain.dto.ProductResult;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.jasperreports.engine.*;
@@ -47,6 +45,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -70,6 +69,21 @@ public class ProductController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
+    private static Map<String, Integer> operationMap = new HashMap();
+    static {
+        operationMap.put("survey", Integer.valueOf(0));
+        operationMap.put("newTest", Integer.valueOf(1));
+        operationMap.put("changeCategory", Integer.valueOf(2));
+        operationMap.put("doPaging", Integer.valueOf(3));
+        operationMap.put("changeFilterRange", Integer.valueOf(4));
+        operationMap.put("changeFilterOptions", Integer.valueOf(5));
+        operationMap.put("changeFilterNeeds", Integer.valueOf(6));
+        operationMap.put("addToCart", Integer.valueOf(7));
+        operationMap.put("addToWishlist", Integer.valueOf(8));
+        operationMap.put("showDetails", Integer.valueOf(9));
+        operationMap.put("addToCartDetail", Integer.valueOf(10));
+    }
+
     @Resource
     private ProductRepository productRepository;
 
@@ -82,15 +96,62 @@ public class ProductController {
     @Resource
     private LogRepository logRepository;
 
-    @RequestMapping(value = "/log", method = RequestMethod.POST)
-    public ResponseEntity log(@RequestBody HashMap params) throws JsonProcessingException {
+    @RequestMapping(value = "/savedSurvey/{login}", method = RequestMethod.GET)
+    public HttpEntity<Map> getSavedSurvey(@PathVariable String login) throws IOException {
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(params);
+        AccessLog accessLog = logRepository.findByLoginAndOperation(login, Integer.valueOf(operationMap.get("survey")));
+
+        Map survey = new HashMap();
+        if (accessLog != null) {
+            ObjectMapper mapper = new ObjectMapper();
+            survey = (HashMap)mapper.readValue(accessLog.getParams(), HashMap.class);
+        }
+        return new HttpEntity(survey);
+
+    }
+
+    @RequestMapping(value = "/logSurvey", method = RequestMethod.POST)
+    public ResponseEntity logSurvey(@RequestBody HashMap answers) throws JsonProcessingException {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Integer survey = Integer.valueOf(operationMap.get("survey"));
+        AccessLog accessLog = logRepository.findByLoginAndOperation(principal.toString(), survey);
+
+        if (accessLog == null) {
+            accessLog = new AccessLog();
+        }
+
+        String json = getJsonAsString(answers);
+
+        return logOperation(json, accessLog, survey, principal.toString());
+
+    }
+
+
+    @RequestMapping(value = "/log", method = RequestMethod.POST)
+    public ResponseEntity log(@RequestBody HashMap<String, Object> params) throws JsonProcessingException {
+
+        String json = getJsonAsString(params);
 
         AccessLog accessLog = new AccessLog();
+
+        Integer operation = operationMap.get((String) params.get("op"));
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        accessLog.setLogin(principal.toString());
+        String login = principal.toString();
+        return logOperation(json, accessLog, operation, login);
+    }
+
+    private String getJsonAsString(HashMap params) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(params);
+    }
+
+    @Transactional
+    private ResponseEntity logOperation(String json, AccessLog accessLog, Integer operation, String login) {
+        accessLog.setLogin(login);
+        accessLog.setOperation(operation);
+
         accessLog.setParams(json);
         accessLog.setRegister(Calendar.getInstance().getTime());
 

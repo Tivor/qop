@@ -1,6 +1,21 @@
 <section>
     <div class="container" ng-controller="TestCtrl">
 
+        <div class="row">
+            <div class="mainmenu pull-left">
+                <ul class="nav navbar-nav collapse navbar-collapse">
+                    <li class="dropdown"><a href="">Testes<i class="fa fa-angle-down"></i></a>
+                        <ul role="menu" class="sub-menu">
+                            <li><a href="#/test/1">Teste 1</a></li>
+                            <li><a href="#/test/2">Teste 2</a></li>
+                            <li><a href="#/test/3">Teste 3</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#/survey">Questionário</a>
+                </ul>
+            </div>
+        </div>
+
         <div class="category-tab"><!--category-tab-->
             <div class="col-sm-1"></div>
 
@@ -30,7 +45,8 @@
                              ng-init="feat.filterValue = [feat.optionValues[0].valueOption, feat.optionValues[1].valueOption]">
                             <h4>{{feat.name}}</h4>
 
-                            <div id="{{$index}}" ui-slider="{range: true, stop: changeFilterRange}" ng-model="feat.filterValue"
+                            <div id="{{$index}}" ui-slider="{range: true, stop: changeFilterRange}"
+                                 ng-model="feat.filterValue"
                                  min="{{feat.optionValues[0].valueOption}}"
                                  max="{{feat.optionValues[1].valueOption}}"></div>
                             <b class="pull-left">{{feat.filterValue[0]}} {{feat.textMeasure}}</b>
@@ -42,7 +58,8 @@
                             <h4>{{feat.name}} {{feat.textMeasure}}</h4>
 
                             <div class="group-option clearfix" ng-repeat="opt in feat.optionValues">
-                                <input id="{{$index}}" type="radio" ng-model="feat.filterValue" ng-change="changeFilterOptions(feat,opt.id)" value="{{opt.id}}"/><label
+                                <input id="{{$index}}" type="radio" ng-model="feat.filterValue"
+                                       ng-change="changeFilterOptions(feat,opt.id)" value="{{opt.id}}"/><label
                                     class="option"><h6>{{opt.valueOption}}</h6></label>
                             </div>
                         </div>
@@ -121,8 +138,10 @@
                                 </div>
                                 <div class="row">
                                     <ul class="nav nav-pills nav-justified">
-                                        <li><a href="" ng-click="addToWishlist(product)"><i class="fa fa-plus-square"></i>Lista de Desejos</a></li>
-                                        <li><a href="" ng-click="showDetails(product)"><i class="fa fa-tasks"></i>Detalhes</a></li>
+                                        <li><a href="" ng-click="addToWishlist(product)"><i
+                                                class="fa fa-plus-square"></i>Lista de Desejos</a></li>
+                                        <li><a href="" ng-click="showDetails(product)"><i class="fa fa-tasks"></i>Detalhes</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -159,6 +178,7 @@
                         <div class="col-sm-8">
                             <div class="product-information"><!--/product-information-->
                                 <h2>{{product.name}}</h2>
+
                                 <p>ID: #00PZ{{selectedProduct.id}}</p>
                                 <img src="images/product-details/rating.png" alt="">
 								<span>
@@ -170,13 +190,19 @@
                                         Adicionar
                                     </button>
 								</span>
+
                                 <p><b>Disponibilidade:</b> Em estoque</p>
+
                                 <p><b>Condição:</b> Novo</p>
+
                                 <p><b>Marca:</b> E-SHOPPER</p>
-                                <a href=""><img src="images/product-details/share.png" class="share img-responsive" alt=""></a>
-                            </div><!--/product-information-->
+                                <a href=""><img src="images/product-details/share.png" class="share img-responsive"
+                                                alt=""></a>
+                            </div>
+                            <!--/product-information-->
                         </div>
-                    </div><!--/product-details-->
+                    </div>
+                    <!--/product-details-->
                 </div>
             </div>
             <div class="row">
@@ -185,12 +211,17 @@
                         <div class="col-sm-12">
                             <ul>
                                 <li ng-repeat="feature in selectedProduct.productFeatureCollection">
-                                    <p ng-if="feature.feature.typeMeasure == 1">{{feature.feature.name}}: {{feature.value}} {{feature.feature.textMeasure}}</p>
-                                    <p ng-if="feature.feature.typeMeasure == 2">{{feature.feature.name}}: {{feature.feature.optionValues | option:feature.value}} {{feature.feature.textMeasure}}</p>
+                                    <p ng-if="feature.feature.typeMeasure == 1">{{feature.feature.name}}:
+                                        {{feature.value}} {{feature.feature.textMeasure}}</p>
+
+                                    <p ng-if="feature.feature.typeMeasure == 2">{{feature.feature.name}}:
+                                        {{feature.feature.optionValues | option:feature.value}}
+                                        {{feature.feature.textMeasure}}</p>
                                 </li>
                             </ul>
                         </div>
-                    </div><!--/product-details-->
+                    </div>
+                    <!--/product-details-->
                 </div>
             </div>
             <div class="row">

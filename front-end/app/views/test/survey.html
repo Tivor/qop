@@ -1,0 +1,75 @@
+<section>
+
+
+
+    <div class="container" ng-controller="SurveyCtrl">
+
+        <div class="mainmenu pull-left">
+            <ul class="nav navbar-nav collapse navbar-collapse">
+                <li class="dropdown"><a href="">Testes<i class="fa fa-angle-down"></i></a>
+                    <ul role="menu" class="sub-menu">
+                        <li><a ng-click="saveSurvey()" href="#/test/1">Teste 1</a></li>
+                        <li><a ng-click="saveSurvey()" href="#/test/2">Teste 2</a></li>
+                        <li><a ng-click="saveSurvey()" href="#/test/3">Teste 3</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                Abaixo há 3 conjuntos <b>(iguais)</b> de perguntas para cada Teste realizado
+            </div>
+
+            <div class="col-sm-12">
+                Para cada pergunta, escolha uma opção entre 1 ("Discordo fortemente") e 4 ("Concordo plenamente")
+            </div>
+
+            <div class="col-sm-12">
+                Lembre-se de salvar (mesmo que parcialmente) as suas respostas antes de sair desta página.
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="group-option clearfix" ng-repeat="quest in aboutTest[0].question">
+                    <span>{{quest.quest}}1</span>
+                    <p>
+                    <input type="radio" ng-repeat="opt in options" ng-model="currentSurvey.aboutTest.0.question[$parent.$index].value" value="{{opt.value}}"/>
+                    <label class="option"><h6>{{opt.desc}}</h6></label>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="group-option clearfix" ng-repeat="quest in aboutTest[1].question">
+                    <span>{{quest.quest}}2</span>
+                    <p>
+                        <input type="radio" ng-repeat="opt in options" ng-model="currentSurvey.aboutTest.1.question[$parent.$index].value" value="{{opt.value}}"/>
+                        <label class="option"><h6>{{opt.desc}}</h6></label>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="group-option clearfix" ng-repeat="quest in aboutTest[2].question">
+                    <span>{{quest.quest}}3</span>
+                    <p>
+                        <input type="radio" ng-repeat="opt in options" ng-model="currentSurvey.aboutTest.2.question[$parent.$index].value" value="{{opt.value}}"/>
+                        <label class="option"><h6>{{opt.desc}}</h6></label>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="button" ng-click="saveSurvey()">Salvar respostas</button>
+            </div>
+        </div>
+
+    </div>
+</section>

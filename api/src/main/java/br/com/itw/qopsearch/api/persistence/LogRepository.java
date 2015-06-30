@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LogRepository extends JpaRepository<AccessLog, Long> {
 
-
+    public AccessLog findByLoginAndOperation(String login, Integer operation);
 
 }

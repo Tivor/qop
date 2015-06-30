@@ -25,7 +25,7 @@ import java.util.Map;
  *  https://github.com/wdavilaneto/guick
  *  Author: service-wdavilaneto@redhat.com
  */
-@RestController
+//@RestController
 @RequestMapping(value="/reports/dashboard")
 public class DashboardController {
 

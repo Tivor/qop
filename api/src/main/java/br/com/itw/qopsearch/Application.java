@@ -32,7 +32,7 @@ import javax.sql.DataSource;
 @ComponentScan(basePackages = {"br.com.itw.qopsearch.api", "br.com.itw.commons"})
 @Configuration
 @EnableWebMvc
-@MapperScan(basePackages = "br.com.itw.qopsearch.api.persistence.mybatis")
+//@MapperScan(basePackages = "br.com.itw.qopsearch.api.persistence.mybatis")
 @EnableJpaRepositories(basePackages = "br.com.itw.qopsearch.api.persistence")
 @EnableAutoConfiguration
 @EnableGlobalMethodSecurity(securedEnabled = true)
@@ -70,25 +70,18 @@ public class Application extends SpringBootServletInitializer {
         return cacheManager;
     }
 
-    @Bean(name = "entityManager")
-    public SharedEntityManagerBean entityManager() {
-        SharedEntityManagerBean sharedEntityManagerBean = new SharedEntityManagerBean();
-        return sharedEntityManagerBean;
-    }
+//    @Bean(name = "entityManager")
+//    public SharedEntityManagerBean entityManager() {
+//        SharedEntityManagerBean sharedEntityManagerBean = new SharedEntityManagerBean();
+//        return sharedEntityManagerBean;
+//    }
 
-    @Bean
-    @Profile("jboss")
-    public DataSource dataSource() {
-        JndiDataSourceLookup dataSourceLookup = new JndiDataSourceLookup();
-        return dataSourceLookup.getDataSource("java:jboss/qopsearchDS");
-    }
-
-    @Bean
-    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-        SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
-        sqlSessionFactory.setDataSource(dataSource);
-        sqlSessionFactory.setConfigLocation(new ClassPathResource("mybatis-settings.xml"));
-        return (SqlSessionFactory) sqlSessionFactory.getObject();
-    }
+//    @Bean
+//    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+//        SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
+//        sqlSessionFactory.setDataSource(dataSource);
+//        sqlSessionFactory.setConfigLocation(new ClassPathResource("mybatis-settings.xml"));
+//        return (SqlSessionFactory) sqlSessionFactory.getObject();
+//    }
 
 }

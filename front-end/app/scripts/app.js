@@ -26,6 +26,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/', {templateUrl: 'views/main.html'})
         .when('/test/:testcase', {templateUrl: 'views/test/test.html'})
+        .when('/survey', {templateUrl: 'views/test/survey.html'})
         .when('/404', {templateUrl: 'views/404.html'})
         .when('/details', {templateUrl: 'views/product-details.html'})
         .otherwise({redirectTo: '/'});

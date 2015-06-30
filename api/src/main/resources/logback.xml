@@ -17,7 +17,8 @@
     </appender>
 
     <logger name="br.com.itw.qopsearch" level="DEBUG"/>
-    <logger name="org.springframework.cache.interceptor.CacheInterceptor" level="TRACE" />
+    <logger name="org.springframework" level="TRACE" />
+    <logger name="org.h2" level="TRACE" />
     <logger name="org.hibernate.cache" level="TRACE" />
     <logger name="org.activiti.engine" level="INFO" />
     <logger name="org.mybatis" level="DEBUG"/>

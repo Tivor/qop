@@ -41,6 +41,10 @@ public class AccessLog extends BaseEntity<Long> {
     String login;
 
     @NotNull
+    @Column(name = "operation", nullable = false)
+    Integer operation;
+
+    @NotNull
     @Column(name = "params")
     String params;
 
