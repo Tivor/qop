@@ -6,6 +6,7 @@ import java.util.List;
 import br.com.itw.commons.persistence.ICoreRepository;
 import br.com.itw.qopsearch.api.persistence.core.ProductRepositoryCustom;
 import br.com.itw.qopsearch.domain.Product;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,12 +25,11 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
     @Query("SELECT distinct p.id " +
             "FROM Product p " +
             "where p.category.id = :idCat and testCase = :testCase")
+    @Cacheable("findIdsByCategoryAndTestCase")
     public Integer[] findIdsByCategoryAndTestCase(@Param("idCat") Long idCat, @Param("testCase") Integer testCase);
 
+    @Cacheable("findByCategoryIdAndTestCase")
     public List<Product> findByCategoryIdAndTestCase(Long idCat, Integer testCase);
-
-    public List<Long> findIdByCategoryIdAndTestCase(Long idCat, Integer testCase);
-
 
 
 }

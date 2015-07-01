@@ -2,7 +2,3 @@
 - Ativar carousel
 - layout survey
 - menus de retorno
-
-- H2 - file
-- script import.sql
-- habilitar cache de produtos, features, etc...

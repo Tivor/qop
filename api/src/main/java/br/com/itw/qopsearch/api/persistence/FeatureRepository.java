@@ -6,6 +6,7 @@ import java.util.List;
 import br.com.itw.commons.persistence.ICoreRepository;
 import br.com.itw.qopsearch.api.persistence.core.FeatureRepositoryCustom;
 import br.com.itw.qopsearch.domain.Feature;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FeatureRepository extends JpaRepository<Feature, Long >, FeatureRepositoryCustom  {
 
+    @Cacheable("findByCategoryId")
     List<Feature> findByCategoryId(Long idCat);
 
 

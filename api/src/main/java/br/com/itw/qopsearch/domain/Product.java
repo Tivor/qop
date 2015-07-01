@@ -6,27 +6,16 @@
  */
 package br.com.itw.qopsearch.domain;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import javax.persistence.*;
-
-import javax.validation.constraints.*;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import sun.org.mozilla.javascript.internal.annotations.JSGetter;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -44,6 +33,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Cacheable
 public class Product extends BaseEntity<Long> {
 
     @Id

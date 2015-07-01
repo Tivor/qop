@@ -133,22 +133,31 @@
     <defaultCache maxElementsInMemory="10000" eternal="false" diskPersistent="false" timeToIdleSeconds="120"
                   timeToLiveSeconds="120" diskSpoolBufferSizeMB="60" />
 
-    <cache name="org.hibernate.cache.internal.StandardQueryCache" maxElementsInMemory="1000"
-            eternal="false" timeToIdleSeconds="360" timeToLiveSeconds="360">
-    </cache>
-
-    <!-- Extracted from docs: Tracks the timestamps of the most recent updates to particular tables. It is important that the cache timeout of the underlying cache implementation be set to a higher value than the timeouts of any of the query caches. In fact, it is recommend that the the underlying cache not be configured for expiry at all -->
-    <cache name="org.hibernate.cache.spi.UpdateTimestampsCache" eternal="true"> </cache>
-
-    <cache name="br.com.itw.qopsearch.domain.ProductFeature" maxElementsInMemory="5000" eternal="false" diskPersistent="false"
-           timeToIdleSeconds="6000" timeToLiveSeconds="600"/>
-    <cache name="featureProductList" maxElementsInMemory="500" eternal="false" diskPersistent="false"
+    <cache name="br.com.itw.qopsearch.domain.Category" maxElementsInMemory="10" eternal="false" diskPersistent="false"
            timeToIdleSeconds="6000" timeToLiveSeconds="600"/>
 
-    <cache name="br.com.itw.qopsearch.domain.Needs" maxElementsInMemory="5000" eternal="false" diskPersistent="false"
-           timeToIdleSeconds="6000" timeToLiveSeconds="600"/>
-    <cache name="needsList" maxElementsInMemory="500" eternal="false" diskPersistent="false"
+    <cache name="br.com.itw.qopsearch.domain.Product" maxElementsInMemory="10000" eternal="false" diskPersistent="false"
            timeToIdleSeconds="6000" timeToLiveSeconds="600"/>
 
+    <cache name="br.com.itw.qopsearch.domain.Feature" maxElementsInMemory="10000" eternal="false" diskPersistent="false"
+           timeToIdleSeconds="6000" timeToLiveSeconds="600"/>
+
+    <cache name="br.com.itw.qopsearch.domain.ProductFeature" maxElementsInMemory="10000" eternal="false" diskPersistent="false"
+           timeToIdleSeconds="6000" timeToLiveSeconds="600"/>
+
+    <cache name="br.com.itw.qopsearch.domain.ValueFeature" maxElementsInMemory="10000" eternal="false" diskPersistent="false"
+           timeToIdleSeconds="6000" timeToLiveSeconds="600"/>
+
+    <cache name="findIdsByCategoryAndTestCase" maxElementsInMemory="500" eternal="false" diskPersistent="false"
+           timeToIdleSeconds="6000" timeToLiveSeconds="600"/>
+
+    <cache name="findByCategoryIdAndTestCase" maxElementsInMemory="500" eternal="false" diskPersistent="false"
+           timeToIdleSeconds="6000" timeToLiveSeconds="600"/>
+
+    <cache name="findByCategoryId" maxElementsInMemory="500" eternal="false" diskPersistent="false"
+           timeToIdleSeconds="6000" timeToLiveSeconds="600"/>
+
+    <cache name="getCategories" maxElementsInMemory="500" eternal="false" diskPersistent="false"
+           timeToIdleSeconds="6000" timeToLiveSeconds="600"/>
 
 </ehcache>
