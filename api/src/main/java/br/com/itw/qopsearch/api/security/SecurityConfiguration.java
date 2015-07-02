@@ -56,16 +56,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .httpBasic()
-                .realmName("br.com.itw")
-            .and()
-                .exceptionHandling()
+
+        http.exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint)
-            .and()
-                .authorizeRequests()
-                .antMatchers("/")
-                .permitAll()
             .and()
                 .formLogin()
                 .loginProcessingUrl("/api/authentication")
@@ -80,9 +73,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
             .and()
                 .authorizeRequests()
-                .antMatchers("/api/authentication").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
-                .antMatchers("/api/**").hasAnyAuthority("ROLE_USER")
                 .anyRequest().authenticated()
             .and()
                 .csrf()
@@ -92,9 +83,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .disable()
         ;
 
-
-//        .usernameParameter("j_username")
-//                .passwordParameter("j_password")
     }
 
     @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)

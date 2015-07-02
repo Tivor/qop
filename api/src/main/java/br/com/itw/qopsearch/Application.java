@@ -10,6 +10,11 @@ import br.com.itw.commons.aop.OnSuccessAdvice;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
+import org.springframework.boot.autoconfigure.websocket.WebSocketAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -30,12 +35,13 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 //@MapperScan(basePackages = "br.com.itw.qopsearch.api.persistence.mybatis")
 @EnableJpaRepositories(basePackages = "br.com.itw.qopsearch.api.persistence")
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class, WebSocketAutoConfiguration.class, JmxAutoConfiguration.class})
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
 @EnableCaching
-public class Application extends SpringBootServletInitializer {
+@SpringBootApplication
+public class Application {
 
     private static final String EHCACHE_FILE = "ehcache.xml";
 
