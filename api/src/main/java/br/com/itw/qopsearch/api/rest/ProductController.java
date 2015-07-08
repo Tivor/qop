@@ -45,8 +45,6 @@ import java.util.Map;
 @RequestMapping(value = "/Product")
 public class ProductController {
 
-    private static PageRequest DEFAULT_PAGE = new PageRequest(0, 20);
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
     private static Map<String, Integer> operationMap = new HashMap();
