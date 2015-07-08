@@ -22,7 +22,7 @@ public class PageableHelper {
 
     private static PageRequest DEFAULT_PAGEABLE = new PageRequest(0, 10);
 
-    public static Page<?> getPage(Criteria criteria, Pageable pageable){
+    public static Page<?> getPage(Criteria criteria, Pageable pageable) {
         // Count
         Long totalItems = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
 
@@ -43,7 +43,7 @@ public class PageableHelper {
         return (Page<?>) new PageImpl<>(result, pageable, totalItems);
     }
 
-    public static Pageable deafultPageable(){
+    public static Pageable deafultPageable() {
         return DEFAULT_PAGEABLE;
     }
 

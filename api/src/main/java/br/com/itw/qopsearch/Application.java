@@ -26,6 +26,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.support.SharedEntityManagerBean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -41,7 +42,12 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableAspectJAutoProxy
 @EnableCaching
 @SpringBootApplication
-public class Application {
+public class Application extends SpringBootServletInitializer {
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+    }
 
     private static final String EHCACHE_FILE = "ehcache.xml";
 
@@ -72,13 +78,11 @@ public class Application {
         return cacheManager;
     }
 
-
-
-//    @Bean(name = "entityManager")
-//    public SharedEntityManagerBean entityManager() {
-//        SharedEntityManagerBean sharedEntityManagerBean = new SharedEntityManagerBean();
-//        return sharedEntityManagerBean;
-//    }
+    @Bean(name = "entityManager")
+    public SharedEntityManagerBean entityManager() {
+        SharedEntityManagerBean sharedEntityManagerBean = new SharedEntityManagerBean();
+        return sharedEntityManagerBean;
+    }
 
 //    @Bean
 //    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {

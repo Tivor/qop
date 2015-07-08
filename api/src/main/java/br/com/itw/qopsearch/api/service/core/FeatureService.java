@@ -6,11 +6,9 @@
  */
 package br.com.itw.qopsearch.api.service.core;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import br.com.itw.qopsearch.domain.Feature;
 import br.com.itw.qopsearch.api.persistence.FeatureRepository;
 import br.com.itw.qopsearch.api.service.IFeatureService;
+import br.com.itw.qopsearch.domain.Feature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -21,10 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 
 /**
- *  CRUD Rest Json 'Controller' for entityFeature
- *  Guick Generate class:
- *  https://github.com/wdavilaneto/guick
- *  Author: service-wdavilaneto@redhat.com
+ * CRUD Rest Json 'Controller' for entityFeature
+ * Guick Generate class:
+ * https://github.com/wdavilaneto/guick
+ * Author: service-wdavilaneto@redhat.com
  */
 @Service
 class FeatureService implements IFeatureService {
@@ -42,13 +40,13 @@ class FeatureService implements IFeatureService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Feature> search(Feature feature , Pageable pageable) {
+    public Page<Feature> search(Feature feature, Pageable pageable) {
         return featureRepository.search(feature, pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Feature> searchText(String text , Pageable pageable) {
+    public Page<Feature> searchText(String text, Pageable pageable) {
         return featureRepository.searchText(text, pageable);
     }
 
@@ -67,7 +65,7 @@ class FeatureService implements IFeatureService {
     @Override
     @Transactional
     public Feature save(Feature feature) {
-        if (feature.getId() != null){
+        if (feature.getId() != null) {
             featureRepository.update(feature);
         }
         return featureRepository.create(feature);

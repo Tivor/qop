@@ -4,9 +4,8 @@
  *  This source is free under The Apache Software License, Version 2.0
  *  license url http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-package  br.com.itw.commons.rest.dto;
+package br.com.itw.commons.rest.dto;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -17,7 +16,7 @@ import org.springframework.data.domain.Pageable;
  */
 public class SearchFilter<T> {
 
-    private static PageRequest DEFAULT_PAGE = new PageRequest(0,10);
+    private static PageRequest DEFAULT_PAGE = new PageRequest(0, 10);
 
     private Pagination pagination;
 
@@ -40,7 +39,7 @@ public class SearchFilter<T> {
     }
 
     public Pageable getPageable() {
-        if(pagination == null) {
+        if (pagination == null) {
             pagination = new Pagination();
             pagination.setPage(1);
             pagination.setSize(10);

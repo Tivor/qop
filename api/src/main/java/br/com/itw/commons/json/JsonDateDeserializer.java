@@ -33,10 +33,10 @@ public class JsonDateDeserializer extends JsonDeserializer<Date> {
         JsonNode node = oc.readTree(jsonParser);
 
         try {
-            return (Date)dateFormat.parse(node.asText());
+            return (Date) dateFormat.parse(node.asText());
         } catch (ParseException e) {
             try {
-                return (Date)dateFormat2.parse(node.asText());
+                return (Date) dateFormat2.parse(node.asText());
             } catch (ParseException e1) {
                 throw new IOException(e);
             }

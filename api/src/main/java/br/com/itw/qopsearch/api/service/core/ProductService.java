@@ -6,11 +6,9 @@
  */
 package br.com.itw.qopsearch.api.service.core;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import br.com.itw.qopsearch.domain.Product;
 import br.com.itw.qopsearch.api.persistence.ProductRepository;
 import br.com.itw.qopsearch.api.service.IProductService;
+import br.com.itw.qopsearch.domain.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -21,10 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 
 /**
- *  CRUD Rest Json 'Controller' for entityProduct
- *  Guick Generate class:
- *  https://github.com/wdavilaneto/guick
- *  Author: service-wdavilaneto@redhat.com
+ * CRUD Rest Json 'Controller' for entityProduct
+ * Guick Generate class:
+ * https://github.com/wdavilaneto/guick
+ * Author: service-wdavilaneto@redhat.com
  */
 @Service
 class ProductService implements IProductService {
@@ -42,13 +40,13 @@ class ProductService implements IProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Product> search(Product product , Pageable pageable) {
+    public Page<Product> search(Product product, Pageable pageable) {
         return productRepository.search(product, pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Product> searchText(String text , Pageable pageable) {
+    public Page<Product> searchText(String text, Pageable pageable) {
         return productRepository.searchText(text, pageable);
     }
 
@@ -67,7 +65,7 @@ class ProductService implements IProductService {
     @Override
     @Transactional
     public Product save(Product product) {
-        if (product.getId() != null){
+        if (product.getId() != null) {
             productRepository.update(product);
         }
         return productRepository.create(product);

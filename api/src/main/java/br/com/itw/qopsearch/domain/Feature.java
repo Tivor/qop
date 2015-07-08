@@ -23,7 +23,7 @@ import java.util.List;
  * Feature
  * A classe Feature representa o mapeamento Objeto-Relacional
  * da entidade de negocio armazenada na tabela feature.
- *${entity.table.comment}
+ * ${entity.table.comment}
  */
 @Entity
 @Table(name = "feature")
@@ -73,9 +73,9 @@ public class Feature extends BaseEntity<Long> {
 
     @ManyToMany
     @JoinTable(
-            name="value_group",
-            joinColumns={@JoinColumn(name="id_feature", referencedColumnName="id")},
-            inverseJoinColumns={@JoinColumn(name="id_value", referencedColumnName="id")})
+            name = "value_group",
+            joinColumns = {@JoinColumn(name = "id_feature", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "id_value", referencedColumnName = "id")})
     private List<ValueFeature> optionValues;
 
 }

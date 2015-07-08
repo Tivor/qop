@@ -3,9 +3,9 @@
 
     <appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <append>true</append>
-        <file>log</file>
+        <file>/var/log/tomcat7/qopsearch.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <fileNamePattern>log.%i</fileNamePattern>
+            <fileNamePattern>qopsearch.log.%i</fileNamePattern>
             <maxIndex>10</maxIndex>
         </rollingPolicy>
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
@@ -26,7 +26,7 @@
 
     <root>
         <level value="WARN"/>
-        <appender-ref ref="stdout" />
+        <appender-ref ref="stdout"/>
         <!--<appender-ref ref="logfile"/>-->
     </root>
 </configuration>

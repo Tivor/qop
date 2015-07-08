@@ -131,7 +131,7 @@
     The defaultCache has an implicit name "default" which is a reserved cache name.
     -->
     <defaultCache maxElementsInMemory="10000" eternal="false" diskPersistent="false" timeToIdleSeconds="120"
-                  timeToLiveSeconds="120" diskSpoolBufferSizeMB="60" />
+                  timeToLiveSeconds="120" diskSpoolBufferSizeMB="60"/>
 
     <cache name="br.com.itw.qopsearch.domain.Category" maxElementsInMemory="10" eternal="false" diskPersistent="false"
            timeToIdleSeconds="6000" timeToLiveSeconds="600"/>
@@ -142,10 +142,12 @@
     <cache name="br.com.itw.qopsearch.domain.Feature" maxElementsInMemory="10000" eternal="false" diskPersistent="false"
            timeToIdleSeconds="6000" timeToLiveSeconds="600"/>
 
-    <cache name="br.com.itw.qopsearch.domain.ProductFeature" maxElementsInMemory="10000" eternal="false" diskPersistent="false"
+    <cache name="br.com.itw.qopsearch.domain.ProductFeature" maxElementsInMemory="10000" eternal="false"
+           diskPersistent="false"
            timeToIdleSeconds="6000" timeToLiveSeconds="600"/>
 
-    <cache name="br.com.itw.qopsearch.domain.ValueFeature" maxElementsInMemory="10000" eternal="false" diskPersistent="false"
+    <cache name="br.com.itw.qopsearch.domain.ValueFeature" maxElementsInMemory="10000" eternal="false"
+           diskPersistent="false"
            timeToIdleSeconds="6000" timeToLiveSeconds="600"/>
 
     <cache name="findIdsByCategoryAndTestCase" maxElementsInMemory="500" eternal="false" diskPersistent="false"

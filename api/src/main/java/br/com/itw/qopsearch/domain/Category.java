@@ -26,7 +26,7 @@ public class Category extends BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "sq_category")
-    @Column(name="id", precision = 32, scale = 0 )
+    @Column(name = "id", precision = 32, scale = 0)
     private Long id;
 
     @NotNull

@@ -23,7 +23,7 @@ import java.util.List;
  * Product
  * A classe Product representa o mapeamento Objeto-Relacional
  * da entidade de negocio armazenada na tabela product.
- *${entity.table.comment}
+ * ${entity.table.comment}
  */
 @Entity
 @Table(name = "product")
@@ -38,7 +38,7 @@ public class Product extends BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "sq_product")
-    @Column(name="id", precision = 32, scale = 0 )
+    @Column(name = "id", precision = 32, scale = 0)
     private Long id;
 
     @NotNull

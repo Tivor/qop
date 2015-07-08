@@ -6,9 +6,6 @@
  */
 package br.com.itw.qopsearch.api.persistence.core;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 import br.com.itw.qopsearch.domain.Feature;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +14,7 @@ public interface FeatureRepositoryCustom {
 
     /**
      * Returns an full, but Paged, list of all entities (Feature)
+     *
      * @param pageable
      * @return
      */

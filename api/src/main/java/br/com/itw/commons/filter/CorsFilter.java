@@ -22,9 +22,9 @@ import java.io.IOException;
  * against a different origin (e.g., different domain) than the one from which it was served. Although the same-origin policy is effective
  * in preventing resources from different origins, it also prevents legitimate interactions between a server and clients of a known and
  * trusted origin.
- *
+ * <p/>
  * Cross-Origin Resource Sharing (CORS) is a technique for relaxing the same-origin policy, allowing Javascript on a web page to consume a REST API served from a different origin.
- *
+ * <p/>
  * For implementation tutorial, visit http://spring.io/guides/gs/rest-service-cors/
  */
 @Component
@@ -43,8 +43,10 @@ public class CorsFilter implements Filter {
         chain.doFilter(req, res);
     }
 
-    public void init(FilterConfig filterConfig) {}
+    public void init(FilterConfig filterConfig) {
+    }
 
-    public void destroy() {}
+    public void destroy() {
+    }
 
 }

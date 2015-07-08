@@ -8,11 +8,10 @@ import java.io.Serializable;
  * Created by thiago.gama on 01/10/2014.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public abstract
-class BaseEntity <T extends Serializable>{
+public abstract class BaseEntity<T extends Serializable> {
 
 
-      /**
+    /**
      * Returns the identifier of the document.
      *
      * @return the id
@@ -25,7 +24,7 @@ class BaseEntity <T extends Serializable>{
      */
     @Override
     public boolean equals(Object obj) {
-        if(obj == null){
+        if (obj == null) {
             return false;
         }
         if (this == obj) {

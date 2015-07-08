@@ -4,7 +4,7 @@
  *  This source is free under The Apache Software License, Version 2.0
  *  license url http://www.apache.org/licenses/LICENSE-2.0.txt
  */
-package  br.com.itw.commons.rest.dto;
+package br.com.itw.commons.rest.dto;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,10 +22,10 @@ public class Pagination {
     private int size = 20; // default values
     private String sort;
 
-    public Pagination(){
+    public Pagination() {
     }
 
-    public Pagination(int page, int size){
+    public Pagination(int page, int size) {
         this.page = page;
         this.size = size;
     }
@@ -49,6 +49,7 @@ public class Pagination {
     public String getSort() {
         return sort;
     }
+
     public void setSort(String sort) {
         this.sort = sort;
     }
@@ -56,7 +57,7 @@ public class Pagination {
     public Pageable getPageable() {
         // Page is -1 becouse Spring pagination deal with Pagination as an array representation (0..size-1)
         // And presentation pagination starts 'with page 1'
-        if (sort == null || "".equals(sort.trim())){
+        if (sort == null || "".equals(sort.trim())) {
             return new PageRequest(((page < 1 ? 1 : page) - 1), size);
         }
         return new PageRequest(((page < 1 ? 1 : page) - 1), size, new Sort(sort));

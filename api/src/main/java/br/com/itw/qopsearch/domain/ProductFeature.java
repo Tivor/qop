@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull;
  * FeatureProduct
  * A classe FeatureProduct representa o mapeamento Objeto-Relacional
  * da entidade de negocio armazenada na tabela feature_product.
- *${entity.table.comment}
+ * ${entity.table.comment}
  */
 @Entity
 @Table(name = "product_feature")
@@ -39,7 +39,7 @@ public class ProductFeature extends BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "sq_prod_feat")
-    @Column(name="id", precision = 32, scale = 0 )
+    @Column(name = "id", precision = 32, scale = 0)
     private Long id;
 
     @NotNull

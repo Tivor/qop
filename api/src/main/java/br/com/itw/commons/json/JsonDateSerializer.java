@@ -3,6 +3,7 @@ package br.com.itw.commons.json;
 /**
  * Created by walter.davila on 15/01/2015.
  */
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;

@@ -19,7 +19,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
@@ -37,20 +36,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  CRUD Rest Json 'Controller' for entityProduct
- *  Guick Generate class:
- *  https://github.com/wdavilaneto/guick
- *  Author: service-wdavilaneto@redhat.com
+ * CRUD Rest Json 'Controller' for entityProduct
+ * Guick Generate class:
+ * https://github.com/wdavilaneto/guick
+ * Author: service-wdavilaneto@redhat.com
  */
 @RestController
-@RequestMapping(value="/Product")
+@RequestMapping(value = "/Product")
 public class ProductController {
 
-    private static PageRequest DEFAULT_PAGE = new PageRequest(0,20);
+    private static PageRequest DEFAULT_PAGE = new PageRequest(0, 20);
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
     private static Map<String, Integer> operationMap = new HashMap();
+
     static {
         operationMap.put("survey", Integer.valueOf(0));
         operationMap.put("newTest", Integer.valueOf(1));
@@ -85,7 +85,7 @@ public class ProductController {
         Map survey = new HashMap();
         if (accessLog != null) {
             ObjectMapper mapper = new ObjectMapper();
-            survey = (HashMap)mapper.readValue(accessLog.getParams(), HashMap.class);
+            survey = (HashMap) mapper.readValue(accessLog.getParams(), HashMap.class);
         }
         return new HttpEntity(survey);
 
@@ -150,6 +150,7 @@ public class ProductController {
 
     /**
      * Returns an full, but Paged, list of all entities (Product)
+     *
      * @return
      */
     @RequestMapping(value = "/findAll/{idCat}/{testCase}", method = RequestMethod.GET)

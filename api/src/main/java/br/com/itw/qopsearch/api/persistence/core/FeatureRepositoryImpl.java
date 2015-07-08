@@ -6,24 +6,19 @@
  */
 package br.com.itw.qopsearch.api.persistence.core;
 
-import java.math.BigDecimal;
 import br.com.itw.commons.persistence.PageableHelper;
 import br.com.itw.qopsearch.domain.Feature;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.*;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 public class FeatureRepositoryImpl implements FeatureRepositoryCustom {
 
@@ -32,10 +27,11 @@ public class FeatureRepositoryImpl implements FeatureRepositoryCustom {
 
     /**
      * Returns an full, but Paged, list of all entities (Feature)
+     *
      * @param pageable
      * @return
      */
-    public Page<Feature> findAll(Pageable pageable){
+    public Page<Feature> findAll(Pageable pageable) {
         if (pageable == null) {
             pageable = PageableHelper.deafultPageable();
         }
@@ -66,8 +62,8 @@ public class FeatureRepositoryImpl implements FeatureRepositoryCustom {
         }
         Session session = (Session) entityManager.getDelegate();
         Criteria criteria = session.createCriteria(Feature.class);
-        criteria.add( Restrictions.disjunction()
-            .add(Restrictions.ilike("name", text, MatchMode.ANYWHERE))
+        criteria.add(Restrictions.disjunction()
+                        .add(Restrictions.ilike("name", text, MatchMode.ANYWHERE))
         );
         return (Page<Feature>) PageableHelper.getPage(criteria, pageable);
     }
@@ -76,14 +72,16 @@ public class FeatureRepositoryImpl implements FeatureRepositoryCustom {
     public Feature get(Long id) {
         return entityManager.find(Feature.class, id);
     }
+
     @Override
-    public  Feature update( Feature feature){
+    public Feature update(Feature feature) {
         Session session = (Session) entityManager.getDelegate();
         session.update(feature);
         return feature;
     }
+
     @Override
-    public  Feature create( Feature feature) {
+    public Feature create(Feature feature) {
         Session session = (Session) entityManager.getDelegate();
         session.persist(feature);
         return feature;

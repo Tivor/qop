@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
- *  CRUD Rest Json 'Controller' for entity${entity.name}
- *  Guick Generate class:
- *  https://github.com/wdavilaneto/guick
- *  Author: service-wdavilaneto@redhat.com
+ * CRUD Rest Json 'Controller' for entity${entity.name}
+ * Guick Generate class:
+ * https://github.com/wdavilaneto/guick
+ * Author: service-wdavilaneto@redhat.com
  */
 @RestController
 public class AccountController {
@@ -35,14 +36,14 @@ public class AccountController {
     /**
      * GET  /rest/authenticate -> check if the user is authenticated, and return its login.
      */
-    @RequestMapping(value = "/authenticate",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/authenticate", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<Map> isAuthenticated(HttpServletRequest request) {
         String username = request.getRemoteUser();
-        if (username == null){
+        if (username == null) {
             return new ResponseEntity<Map>(HttpStatus.UNAUTHORIZED);
         }
-        Map<String,String> result = new HashMap<String,String>();
-        result.put(USERNAME,request.getRemoteUser());
+        Map<String, String> result = new HashMap<String, String>();
+        result.put(USERNAME, request.getRemoteUser());
         return new HttpEntity(result);
     }
 

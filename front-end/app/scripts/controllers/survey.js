@@ -7,8 +7,11 @@
  * Controller of the sbAdminApp
  */
 angular.module('qopApp')
-  .controller('SurveyCtrl', function($scope, $routeParams, Survey, toaster, $filter, $modal, loginService) {
+  .controller('SurveyCtrl', function($scope, $routeParams, Survey, toaster, $filter, $modal, loginService, Test, $interval, $rootScope) {
 
+        Test.getCategories(null, function(response){
+            $scope.categories = response;
+        });
 
         var questions = [
             {quest: "Acho que eu gostaria de usar frequentemente o filtro do Teste ", value : 0},
@@ -24,18 +27,16 @@ angular.module('qopApp')
         ];
 
         $scope.aboutTest = [
-
             {question : questions},
             {question : questions},
             {question : questions}
-
         ];
 
         $scope.options = [
-            {value : 1, desc : "1 - Discordo completamente"},
+            {value : 1, desc : "1"},
             {value : 2, desc : "2"},
             {value : 3, desc : "3"},
-            {value : 4, desc : "4 - Concordo plenamente"}
+            {value : 4, desc : "4"}
         ];
 
         $scope.currentSurvey = Survey.getCurrentSurvey();
@@ -49,11 +50,17 @@ angular.module('qopApp')
             });
         }
 
-        $scope.saveSurvey = function(){
+        $scope.saveSurvey = function(silent){
             Survey.logSurvey($scope.currentSurvey, function(){
-                toaster.pop('success', 'Sucesso', 'Pesquisa Salva com Sucesso');
+                if (silent === undefined)
+                    toaster.pop('success', 'Sucesso', 'Pesquisa Salva com Sucesso');
             });
         };
 
+        $scope.autoSave = $interval($scope.saveSurvey, 10000);
 
+        var dereg = $rootScope.$on('$locationChangeSuccess', function() {
+            $interval.cancel($scope.autoSave);
+            dereg();
+        });
   });

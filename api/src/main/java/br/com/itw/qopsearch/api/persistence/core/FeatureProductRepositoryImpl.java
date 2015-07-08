@@ -10,7 +10,9 @@ import br.com.itw.commons.persistence.PageableHelper;
 import br.com.itw.qopsearch.domain.ProductFeature;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.*;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,10 +27,11 @@ public class FeatureProductRepositoryImpl implements FeatureProductRepositoryCus
 
     /**
      * Returns an full, but Paged, list of all entities (FeatureProduct)
+     *
      * @param pageable
      * @return
      */
-    public Page<ProductFeature> findAll(Pageable pageable){
+    public Page<ProductFeature> findAll(Pageable pageable) {
         if (pageable == null) {
             pageable = PageableHelper.deafultPageable();
         }
@@ -67,7 +70,7 @@ public class FeatureProductRepositoryImpl implements FeatureProductRepositoryCus
         }
         Session session = (Session) entityManager.getDelegate();
         Criteria criteria = session.createCriteria(ProductFeature.class);
-        criteria.add( Restrictions.disjunction()
+        criteria.add(Restrictions.disjunction()
         );
         return (Page<ProductFeature>) PageableHelper.getPage(criteria, pageable);
     }
@@ -76,14 +79,16 @@ public class FeatureProductRepositoryImpl implements FeatureProductRepositoryCus
     public ProductFeature get(Long id) {
         return entityManager.find(ProductFeature.class, id);
     }
+
     @Override
-    public ProductFeature update( ProductFeature productFeature){
+    public ProductFeature update(ProductFeature productFeature) {
         Session session = (Session) entityManager.getDelegate();
         session.update(productFeature);
         return productFeature;
     }
+
     @Override
-    public ProductFeature create( ProductFeature productFeature) {
+    public ProductFeature create(ProductFeature productFeature) {
         Session session = (Session) entityManager.getDelegate();
         session.persist(productFeature);
         return productFeature;

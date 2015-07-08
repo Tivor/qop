@@ -20,12 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 @ControllerAdvice
 public class DefaultExceptionHandler {
@@ -53,7 +48,7 @@ public class DefaultExceptionHandler {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
     public Map<String, Object> handleValidationException(MethodArgumentNotValidException ex) {
-        LOGGER.error("ExceptionBarrier Message " , ex );
+        LOGGER.error("ExceptionBarrier Message ", ex);
         Map<String, Object> map = new HashMap<>();
         map.put(ERROR, resolveMessage(VALIDATION_FAILURE, null));
         map.put(VIOLATIONS, convertErrorInFieldMessage(ex.getBindingResult()));
@@ -65,7 +60,7 @@ public class DefaultExceptionHandler {
     @ResponseStatus(value = HttpStatus.CONFLICT)
     @ResponseBody
     public Map<String, Object> handleBusinessException(BusinessException ex) {
-        LOGGER.error("ExceptionBarrier Message " , ex );
+        LOGGER.error("ExceptionBarrier Message ", ex);
         Map<String, Object> map = new HashMap<>();
         map.put(ERROR, resolveMessage(VALIDATION_FAILURE, ex.getMessageParams()));
         List<String> violations = new ArrayList<>();
@@ -79,7 +74,7 @@ public class DefaultExceptionHandler {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public Map<String, Object> handleUncaughtException(Exception ex) {
-        LOGGER.error("ExceptionBarrier Message " , ex );
+        LOGGER.error("ExceptionBarrier Message ", ex);
         Map<String, Object> map = new HashMap<>();
         String resolveMessage = resolveMessage(UNKNOWN_ERROR, null);
         map.put(ERROR, resolveMessage);

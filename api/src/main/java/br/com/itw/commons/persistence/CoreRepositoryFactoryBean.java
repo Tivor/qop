@@ -20,11 +20,11 @@ import java.io.Serializable;
  */
 @SuppressWarnings("unchecked")
 public class CoreRepositoryFactoryBean<R extends JpaRepository<T, I>, T, I extends Serializable>
-    extends JpaRepositoryFactoryBean<R, T, I> {
+        extends JpaRepositoryFactoryBean<R, T, I> {
 
     protected RepositoryFactorySupport createRepositoryFactory(EntityManager entityManager) {
 
-    return new CoreRepositoryFactory(entityManager);
+        return new CoreRepositoryFactory(entityManager);
     }
 
     private static class CoreRepositoryFactory<T, I extends Serializable> extends JpaRepositoryFactory {
@@ -38,6 +38,7 @@ public class CoreRepositoryFactoryBean<R extends JpaRepository<T, I>, T, I exten
         protected Object getTargetRepository(RepositoryMetadata metadata) {
             return new CoreRepository<T, I>((Class<T>) metadata.getDomainType(), entityManager);
         }
+
         protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
             // The RepositoryMetadata can be safely ignored, it is used by the JpaRepositoryFactory
             //to check for QueryDslJpaRepository's which is out of scope.

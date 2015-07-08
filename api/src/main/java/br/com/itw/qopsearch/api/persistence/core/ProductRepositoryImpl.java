@@ -6,24 +6,19 @@
  */
 package br.com.itw.qopsearch.api.persistence.core;
 
-import java.math.BigDecimal;
 import br.com.itw.commons.persistence.PageableHelper;
 import br.com.itw.qopsearch.domain.Product;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.*;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
@@ -32,10 +27,11 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
     /**
      * Returns an full, but Paged, list of all entities (Product)
+     *
      * @param pageable
      * @return
      */
-    public Page<Product> findAll(Pageable pageable){
+    public Page<Product> findAll(Pageable pageable) {
         if (pageable == null) {
             pageable = PageableHelper.deafultPageable();
         }
@@ -66,9 +62,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         }
         Session session = (Session) entityManager.getDelegate();
         Criteria criteria = session.createCriteria(Product.class);
-        criteria.add( Restrictions.disjunction()
-            .add(Restrictions.ilike("description", text, MatchMode.ANYWHERE))
-            .add(Restrictions.ilike("image", text, MatchMode.ANYWHERE))
+        criteria.add(Restrictions.disjunction()
+                        .add(Restrictions.ilike("description", text, MatchMode.ANYWHERE))
+                        .add(Restrictions.ilike("image", text, MatchMode.ANYWHERE))
         );
         return (Page<Product>) PageableHelper.getPage(criteria, pageable);
     }
@@ -77,14 +73,16 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     public Product get(Long id) {
         return entityManager.find(Product.class, id);
     }
+
     @Override
-    public  Product update( Product product){
+    public Product update(Product product) {
         Session session = (Session) entityManager.getDelegate();
         session.update(product);
         return product;
     }
+
     @Override
-    public  Product create( Product product) {
+    public Product create(Product product) {
         Session session = (Session) entityManager.getDelegate();
         session.persist(product);
         return product;

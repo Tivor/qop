@@ -17,7 +17,7 @@ import java.util.Date;
 @Entity
 @Table(name = "access_log")
 @SequenceGenerator(name = "sq_log", sequenceName = "sq_log")
-@Inheritance(strategy= InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Setter

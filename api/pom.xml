@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>qopsearch-api</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <build>
         <finalName>qopsearch</finalName>
@@ -37,7 +37,6 @@
                 </executions>
             </plugin>
         </plugins>
-
     </build>
 
     <dependencies>
@@ -46,6 +45,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -122,17 +122,29 @@
             <artifactId>spring-context-support</artifactId>
             <version>4.0.7.RELEASE</version>
         </dependency>
-        <!--
-            ************************************
-            *** PROVIDED SCOPED DEPENDENCIES ***
-            ************************************
-        -->
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>6.0</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>remote</id>
+
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
 </project>

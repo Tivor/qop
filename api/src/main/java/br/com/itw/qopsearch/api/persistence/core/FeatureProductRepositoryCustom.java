@@ -14,6 +14,7 @@ public interface FeatureProductRepositoryCustom {
 
     /**
      * Returns an full, but Paged, list of all entities (FeatureProduct)
+     *
      * @param pageable
      * @return
      */
