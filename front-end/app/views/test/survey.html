@@ -4,7 +4,7 @@
 
         <div class="mainmenu pull-left">
             <ul class="nav navbar-nav collapse navbar-collapse">
-                <li class="dropdown"><a href="">Testes<i class="fa fa-angle-down"></i></a>
+                <li class="dropdown"><a href="">Retornar aos Testes<i class="fa fa-angle-down"></i></a>
                     <ul role="menu" class="sub-menu">
                         <li><a ng-click="saveSurvey()" href="#/test/1">Teste 1</a></li>
                         <li><a ng-click="saveSurvey()" href="#/test/2">Teste 2</a></li>
@@ -14,82 +14,142 @@
             </ul>
         </div>
 
-        <header id="header" class="info">
-            <div class="row">
-                <h2>Questionário</h2>
 
-                <div>
-                    Agradecemos sua participação até agora! Seria muito importante saber sua opinião através das perguntas
-                    abaixo.
-                </div>
-            </div>
-        </header>
-
-        <!-- Multiple Checkboxes -->
         <div class="form-group">
+            <h2 align="right">Questionário</h2>
+
+            <hr>
+
             <div class="row">
-                <label class="col-md-6 control-label">Selecione as categorias que você conhece <b>bem</b></label>
-                <label class="col-md-6 control-label">Selecione as categorias que você conhece <b>pouco</b></label>
+                <div class="col-sm-12">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-success">
+                            <span><i class="fa fa-microphone"></i>
+                                Agradecemos sua participação até agora! Seria muito importante saber sua opinião através das
+                                perguntas abaixo.
+                            </span>
+                        </li>
+                        <!--<li class="list-group-item list-group-item-danger">-->
+                            <!--<span><i class="fa fa-floppy-o"></i>-->
+                                <!--Lembre-se de salvar (mesmo que parcialmente) as suas respostas antes de sair desta página.-->
+                            <!--</span>-->
+                        <!--</li>-->
+                    </ul>
+                </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="checkbox" ng-repeat="cat in categories">
-                        <label for="checkboxes1-{{$index}}" ng-hide="currentSurvey.unknown[$index].answer == true">
-                            <input type="checkbox" name="checkboxes1" id="checkboxes1-{{$index}}" value="cat.id" ng-model="currentSurvey.known[$index].answer">
-                            {{cat.name}}
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="checkbox" ng-repeat="cat in categories">
-                        <label for="checkboxes1-{{$index}}" ng-hide="currentSurvey.known[$index].answer == true">
-                            <input type="checkbox" name="checkboxes1" id="checkboxes2-{{$index}}" value="cat.id" ng-model="currentSurvey.unknown[$index].answer">
-                            {{cat.name}}
-                        </label>
-                    </div>
-                </div>
+        </div>
+
+        <div class="panel panel-primary">
+
+            <div class="panel-heading">
+                <h3>Em relação as categorias de produto</h3>
             </div>
 
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <label class="control-label">
+                                    <span><i class="fa fa-location-arrow"></i>
+                                        Selecione as categorias que você conhece <strong>bem</strong>:
+                                    </span>
+                                </label>
+
+                                <div class="checkbox" ng-repeat="cat in categories">
+                                    <label for="checkboxes1-{{$index}}" ng-hide="currentSurvey.unknown[$index].answer == true">
+                                        <input type="checkbox" name="checkboxes1" id="checkboxes1-{{$index}}" value="cat.id"
+                                               ng-model="currentSurvey.known[$index].answer">
+                                        {{cat.name}}
+                                    </label>
+                                    <label ng-show="currentSurvey.unknown[$index].answer == true" ng-class="{'tachado' : currentSurvey.unknown[$index].answer == true}">
+                                        {{cat.name}}
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <label class="control-label">
+                                    <span><i class="fa fa-location-arrow"></i>
+                                        Selecione as categorias que você conhece <strong>pouco</strong>:
+                                    </span>
+                                </label>
+
+                                <div class="checkbox" ng-repeat="cat in categories">
+                                    <label for="checkboxes1-{{$index}}" ng-hide="currentSurvey.known[$index].answer == true">
+                                        <input type="checkbox" name="checkboxes1" id="checkboxes2-{{$index}}" value="cat.id"
+                                               ng-model="currentSurvey.unknown[$index].answer">
+                                        {{cat.name}}
+                                    </label>
+                                    <label ng-show="currentSurvey.known[$index].answer == true" ng-class="{'tachado' : currentSurvey.known[$index].answer == true}">
+                                        {{cat.name}}
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <hr>
 
         <div class="row">
             <div class="col-sm-12">
-                Abaixo há 3 conjuntos <b>(iguais)</b> de perguntas para cada Teste que foi realizado.
-                Retorne ao menu acima caso não tenha terminado ainda de navegar em todos os testes e/ou categorias.
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                Para cada pergunta, escolha uma opção entre (1) <b>"Discordo fortemente"</b> e (4) <b>"Concordo plenamente"</b>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                Lembre-se de salvar (mesmo que parcialmente) as suas respostas antes de sair desta página.
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-info">
+                        <span><i class="fa fa-undo"></i>
+                            Abaixo há 3 conjuntos <b>(iguais)</b> de perguntas para cada Teste que foi realizado.
+                            <p>Retorne ao menu acima caso não tenha terminado ainda de navegar em todos os testes e/ou
+                                categorias.</p>
+                        </span>
+                    </li>
+                    <li class="list-group-item list-group-item-warning">
+                        <span><i class="fa fa-pencil-square-o"></i>
+                            Para cada pergunta, escolha uma opção entre (1) <b>"Discordo fortemente"</b> e (4) <b>"Concordo
+                            plenamente"</b>
+                        </span>
+                    </li>
+                </ul>
             </div>
         </div>
 
         <!-- Multiple Radios (inline) -->
-        <div class="form-group" ng-repeat="test in [1, 2, 3]">
-            <hr>
-            <div class="row" ng-repeat="quest in aboutTest[$index].question">
-                <label class="col-md-6 control-label">{{quest.quest}}{{test}}</label>
-                <div class="col-md-6">
-                    <label class="radio-inline" ng-repeat="opt in options">
-                        {{opt.desc}}
-                        <input type="radio" value="{{opt.value}}"
-                               ng-model="currentSurvey.aboutTest[test].question[$parent.$index].value">
-                    </label>
-                </div>
+        <div class="panel panel-primary" ng-repeat="test in [1, 2, 3]">
+            <div class="panel-heading">
+                <h3>Sobre o filtro de pesquisa de produtos do <strong>Teste {{test}}</strong></h3>
+            </div>
+
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="quest in aboutTest[$index].question">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label">{{quest.quest}}{{test}}</label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="btn btn-default" ng-repeat="opt in options"
+                                       ng-class="{'btn-info' : currentSurvey.aboutTest[test].question[$parent.$index].value == opt.value}">
+                                    <input value="{{opt.value}}" type="radio"
+                                           ng-model="currentSurvey.aboutTest[test].question[$parent.$index].value">
+                                    {{opt.desc}}
+                                </label>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
 
-        <hr>
         <div class="row">
             <div class="col-sm-12">
-                <button type="button" ng-click="saveSurvey()">Salvar respostas</button>
+                <button class="btn btn-success" type="button" ng-click="saveSurvey()">
+                    <span><i class="fa fa-floppy-o"></i>&nbsp;Salvar respostas</span>
+                </button>
             </div>
         </div>
 

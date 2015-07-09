@@ -16,19 +16,17 @@
             </div>
         </div>
 
-        <div class="category-tab"><!--category-tab-->
-            <div class="col-sm-1"></div>
-
-            <div class="col-sm-10">
-                <h3>Escolha uma categoria: </h3>
-                <ul class="nav nav-tabs">
-                    <li ng-repeat="cat in categories">
-                        <a ng-click="changeCategory({{cat.id}})">{{cat.name}}</a>
-                    </li>
-                </ul>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Escolha uma categoria</h3>
+                <div class="category-tab"><!--category-tab-->
+                    <ul class="nav nav-tabs">
+                        <li ng-repeat="cat in categories">
+                            <a ng-click="changeCategory({{cat.id}})">{{cat.name}}</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-
-            <div class="col-sm-1"></div>
         </div>
 
         <div class="row">
@@ -36,113 +34,122 @@
                 <div class="left-sidebar">
                     <h2 ng-if="idcat > 0">Refinar por:</h2>
                     <!--filter-->
-                    <div ng-repeat="feat in features">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="feat in features">
+                            <!-- Feature com RANGE {min & max} -->
+                            <div class="text-center filter"
+                                 ng-if="feat.typeMeasure == 1"
+                                 ng-init="feat.filterValue = [feat.optionValues[0].valueOption, feat.optionValues[1].valueOption]">
+                                <h4>{{feat.name}}</h4>
 
-                        <hr>
-                        <!-- Feature com RANGE {min & max} -->
-                        <div class="text-center filter"
-                             ng-if="feat.typeMeasure == 1"
-                             ng-init="feat.filterValue = [feat.optionValues[0].valueOption, feat.optionValues[1].valueOption]">
-                            <h4>{{feat.name}}</h4>
+                                <div ui-slider="{range: true, stop: changeFilterRange}"
+                                     ng-model="feat.filterValue"
+                                     min="{{feat.optionValues[0].valueOption}}"
+                                     max="{{feat.optionValues[1].valueOption}}"></div>
+                                <b class="pull-left">{{feat.filterValue[0]}} {{feat.textMeasure}}</b>
+                                <b class="pull-right">{{feat.filterValue[1]}} {{feat.textMeasure}}</b>
 
-                            <div id="{{$index}}" ui-slider="{range: true, stop: changeFilterRange}"
-                                 ng-model="feat.filterValue"
-                                 min="{{feat.optionValues[0].valueOption}}"
-                                 max="{{feat.optionValues[1].valueOption}}"></div>
-                            <b class="pull-left">{{feat.filterValue[0]}} {{feat.textMeasure}}</b>
-                            <b class="pull-right">{{feat.filterValue[1]}} {{feat.textMeasure}}</b>
-                        </div>
-
-                        <!-- Feature com OPTIONS -->
-                        <div class="filter" ng-if="feat.typeMeasure == 2">
-                            <h4>{{feat.name}} {{feat.textMeasure}}</h4>
-
-                            <div class="group-option clearfix" ng-repeat="opt in feat.optionValues">
-                                <input id="{{$index}}" type="radio" ng-model="feat.filterValue"
-                                       ng-change="changeFilterOptions(feat,opt.id)" value="{{opt.id}}"/><label
-                                    class="option"><h6>{{opt.valueOption}}</h6></label>
+                                <div class="row">&nbsp;</div>
                             </div>
-                        </div>
 
-                        <!-- Caso específico de Necessidades -->
-                        <div class="text-center filter" ng-if="feat.typeMeasure == 3">
-                            <h4>{{feat.name}} (%)</h4>
+                            <!-- Feature com OPTIONS -->
+                            <div class="filter" ng-if="feat.typeMeasure == 2">
+                                <h4>{{feat.name}} {{feat.textMeasure}}</h4>
 
-                            <div id="{{$index}}" ui-slider="{stop: changeFilterNeeds}" ng-model="feat.filterValue"
-                                 min="0"
-                                 max="100"></div>
-                            <b class="pull-left">{{feat.filterValue}}%</b> <b class="pull-right">100%</b>
-                        </div>
+                                <div class="radio" ng-repeat="opt in feat.optionValues">
+                                    <label>
+                                        <input type="radio" ng-model="feat.filterValue"
+                                               ng-change="changeFilterOptions(feat,opt.id)" value="{{opt.id}}">{{opt.valueOption}}
+                                    </label>
+                                </div>
+                            </div>
 
-                    </div>
+                            <!-- Caso específico de Necessidades -->
+                            <div class="text-center filter" ng-if="feat.typeMeasure == 3">
+                                <h4>{{feat.name}} (%)</h4>
+
+                                <div ui-slider="{stop: changeFilterNeeds}" ng-model="feat.filterValue"
+                                     min="0"
+                                     max="100"></div>
+                                <b class="pull-left">{{feat.filterValue}}%</b> <b class="pull-right">100%</b>
+
+                                <div class="row">&nbsp;</div>
+                            </div>
+                        </li>
+                    </ul>
                     <!--/filter-->
-
                 </div>
             </div>
 
-            <div class="col-sm-9 padding-right">
+            <div class="col-sm-9 pull-right">
 
-                <div align="center">
-                    <paging class="large"
-                            page="page"
-                            page-size="pageSize"
-                            total="total"
-                            show-prev-next="true"
-                            paging-action="doPaging(page, pageSize, true)">
-                    </paging>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div align="center">
+                            <paging class="large"
+                                    page="page"
+                                    page-size="pageSize"
+                                    total="total"
+                                    show-prev-next="true"
+                                    paging-action="doPaging(page, pageSize, true)">
+                            </paging>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="features_items"><!--features_items-->
-                    <!--<h2 class="title text-center">Resultado</h2>-->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="features_items"><!--features_items-->
+                            <div ng-repeat="product in productPage" class="col-sm-4">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img ng-src="images/products/{{product.image}}" alt=""/>
 
-                    <div ng-repeat="product in productPage" class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <img ng-src="images/products/{{product.image}}" alt=""/>
+                                            <h2>{{product.price | currency}}</h2>
 
-                                    <h2>{{product.price | currency}}</h2>
+                                            <p>{{product.name}}</p>
+                                            <a href="" class="btn btn-default add-to-cart" ng-click="addToCart(product)">
+                                                <i class="fa fa-shopping-cart"></i>Adicionar ao carrinho
+                                            </a>
+                                        </div>
+                                        <div class="product-overlay">
+                                            <img class="img-responsive" ng-src="images/products/{{product.image}}" alt=""/>
 
-                                    <p>{{product.name}}</p>
-                                    <a href="" class="btn btn-default add-to-cart" ng-click="addToCart(product)">
-                                        <i class="fa fa-shopping-cart"></i>Adicionar ao carrinho
-                                    </a>
-                                </div>
-                                <div class="product-overlay">
-                                    <img ng-src="images/products/{{product.image}}" alt=""/>
+                                            <div class="overlay-content">
+                                                <h2>{{product.price | currency}}</h2>
 
-                                    <div class="overlay-content">
-                                        <h2>{{product.price | currency}}</h2>
-
-                                        <p>{{product.name}}</p>
-                                        <a href="" class="btn btn-default add-to-cart" ng-click="addToCart(product)"><i
-                                                class="fa fa-shopping-cart"></i>Adicionar ao carrinho</a>
+                                                <p>{{product.name}}</p>
+                                                <a href="" class="btn btn-default add-to-cart" ng-click="addToCart(product)"><i
+                                                        class="fa fa-shopping-cart"></i>Adicionar ao carrinho</a>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="choose">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <b class="pull-left">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </b>
-                                        <b class="pull-right">
-                                            <i class="fa fa-thumbs-o-down"></i>
-                                            <i class="fa fa-thumbs-o-up" style="padding-left: 15px;"></i>
-                                        </b>
+                                    <div class="choose">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <b class="pull-left">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-half-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </b>
+                                                <b class="pull-right">
+                                                    <i class="fa fa-thumbs-o-down"></i>
+                                                    <i class="fa fa-thumbs-o-up" style="padding-left: 15px;"></i>
+                                                </b>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <ul class="nav nav-pills nav-justified">
+                                                <li><a href="" ng-click="addToWishlist(product)"><i
+                                                        class="fa fa-plus-square"></i>Lista de Desejos</a></li>
+                                                <li><a href="" ng-click="showDetails(product)"><i class="fa fa-tasks"></i>Detalhes</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <ul class="nav nav-pills nav-justified">
-                                        <li><a href="" ng-click="addToWishlist(product)"><i
-                                                class="fa fa-plus-square"></i>Lista de Desejos</a></li>
-                                        <li><a href="" ng-click="showDetails(product)"><i class="fa fa-tasks"></i>Detalhes</a>
-                                        </li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -150,83 +157,91 @@
                 </div>
                 <!--features_items-->
 
-                <div align="center">
-                    <paging class="large"
-                            page="page"
-                            page-size="pageSize"
-                            total="total"
-                            show-prev-next="true"
-                            paging-action="doPaging(page, pageSize, total)">
-                    </paging>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div align="center">
+                            <paging class="large"
+                                    page="page"
+                                    page-size="pageSize"
+                                    total="total"
+                                    show-prev-next="true"
+                                    paging-action="doPaging(page, pageSize, true)">
+                            </paging>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
         </div>
         <script type="text/ng-template" id="productDetail.html">
-            <div class="modal-header">
-                <h3 class="modal-title">Detalhe do Produto</h3>
-            </div>
-            <div class="row">
-                <div class="col-sm-12 padding-right">
-                    <div class="product-details"><!--product-details-->
-                        <div class="col-sm-4">
-                            <div class="view-product">
-                                <img ng-src="images/products/{{selectedProduct.image}}" alt="">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3>Detalhe do Produto</h3>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12 padding-right">
+                            <div class="product-details"><!--product-details-->
+                                <div class="col-sm-4">
+                                    <img class="img-responsive" ng-src="images/products/{{selectedProduct.image}}" alt="">
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="product-information"><!--/product-information-->
+                                        <div class="row">
+                                            <h2>{{selectedProduct.name}}</h2>
+
+                                            <p>ID: #00PZ{{selectedProduct.id}}</p>
+                                            <img src="images/product-details/rating.png" alt="">
+                                            <span>
+                                                <span>{{selectedProduct.price | currency}}</span>
+                                                <label>Quantidade:</label>
+                                                <input type="text" value="3">
+                                                <button type="button" ng-click="addToCartDetail()" class="btn btn-fefault cart">
+                                                    <i class="fa fa-shopping-cart"></i>
+                                                    Adicionar
+                                                </button>
+                                            </span>
+
+                                            <p><b>Disponibilidade:</b> Em estoque</p>
+
+                                            <p><b>Condição:</b> Novo</p>
+
+                                            <p><b>Marca:</b> E-QOP</p>
+                                            <a href="">
+                                                <img src="images/product-details/share.png" class="share img-responsive" alt="">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!--/product-information-->
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="product-information"><!--/product-information-->
-                                <h2>{{product.name}}</h2>
-
-                                <p>ID: #00PZ{{selectedProduct.id}}</p>
-                                <img src="images/product-details/rating.png" alt="">
-								<span>
-									<span>{{selectedProduct.price | currency}}</span>
-									<label>Quantidade:</label>
-									<input type="text" value="3">
-									<button type="button" ng-click="addToCartDetail()" class="btn btn-fefault cart">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        Adicionar
-                                    </button>
-								</span>
-
-                                <p><b>Disponibilidade:</b> Em estoque</p>
-
-                                <p><b>Condição:</b> Novo</p>
-
-                                <p><b>Marca:</b> E-SHOPPER</p>
-                                <a href=""><img src="images/product-details/share.png" class="share img-responsive"
-                                                alt=""></a>
-                            </div>
-                            <!--/product-information-->
+                            <!--/product-details-->
                         </div>
                     </div>
-                    <!--/product-details-->
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12 padding-right">
-                    <div class="product-details"><!--product-details-->
+                    <div class="row">
+                        <div class="col-sm-12 padding-right">
+                            <div class="product-details"><!--product-details-->
+                                <div class="col-sm-12">
+                                    <ul>
+                                        <li ng-repeat="feature in selectedProduct.productFeatureCollection">
+                                            <p ng-if="feature.feature.typeMeasure == 1">{{feature.feature.name}}:
+                                                {{feature.value}} {{feature.feature.textMeasure}}</p>
+
+                                            <p ng-if="feature.feature.typeMeasure == 2">{{feature.feature.name}}:
+                                                {{feature.feature.optionValues | option:feature.value}}
+                                                {{feature.feature.textMeasure}}</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--/product-details-->
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-12">
-                            <ul>
-                                <li ng-repeat="feature in selectedProduct.productFeatureCollection">
-                                    <p ng-if="feature.feature.typeMeasure == 1">{{feature.feature.name}}:
-                                        {{feature.value}} {{feature.feature.textMeasure}}</p>
-
-                                    <p ng-if="feature.feature.typeMeasure == 2">{{feature.feature.name}}:
-                                        {{feature.feature.optionValues | option:feature.value}}
-                                        {{feature.feature.textMeasure}}</p>
-                                </li>
-                            </ul>
+                            <button class="pull-right btn btn-warning" ng-click="cancel()">Fechar</button>
                         </div>
                     </div>
-                    <!--/product-details-->
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <button class="pull-right btn btn-warning" ng-click="cancel()">Cancel</button>
                 </div>
             </div>
         </script>

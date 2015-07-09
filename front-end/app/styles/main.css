@@ -2560,8 +2560,22 @@ div.group-option {
 }
 
 hr {
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 0px;
   border: 0;
-  border-top: 1px solid #FE980F;
+  border-top: 1px solid lightgray;
+}
+
+[data-toggle="buttons"] > .btn > input[type="radio"],
+[data-toggle="buttons"] > .btn > input[type="checkbox"] {
+    clip: rect(1px 10px 1px 1px);
+}
+
+.tachado {
+text-decoration:line-through;
+}
+
+h4 {
+    margin-top : 0px !important;
+    margin-bottom : 15px !important;
 }

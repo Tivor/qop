@@ -33,7 +33,7 @@ angular.module('qopApp')
 
          $scope.productPage = [];
          $scope.page = 1;
-         $scope.pageSize = 15;
+         $scope.pageSize = 9;
 
           $scope.doPaging = function(page, pageSize, doLog){
               var begin = ((page - 1) * pageSize);
@@ -71,7 +71,7 @@ angular.module('qopApp')
 
                 $scope.products = $filter('orderBy')($scope.products, function() {return 0.5 - Math.random();});
                 $scope.page = 1;
-                $scope.doPaging($scope.page, $scope.pageSize, true);
+                $scope.doPaging($scope.page, $scope.pageSize, false);
           }
 
           $scope.changeFilterRange = function(event, ui){
