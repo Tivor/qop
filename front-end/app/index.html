@@ -38,21 +38,21 @@
 
 <body class="waiting-for-angular" authenticated-application ng-app="qopApp">
 <toaster-container></toaster-container>
-<!--[if lt IE 9]>
+<!--[if lt IE 10]>
 <p class="browsehappy">Você está usando um navegador <strong>ultrapassado</strong>. Por favor <a
         href="http://browsehappy.com/">atualize seu navegador</a> para melhorar sua experiência.</p>
 <![endif]-->
 
-    <div ng-include="'views/header.html'"></div>
+<div ng-include="'views/header.html'"></div>
 
-        <div id="initializing-panel"></div>
+<div id="initializing-panel"></div>
 
-        <div id="content-outer">
+    <div id="content-outer container">
 
-            <div login-panel></div>
-            <aside id="content" ng-view ng-show="isAuthenticated"></aside>
+        <div login-panel class="center" style="width:25%"></div>
+        <aside id="content" ng-view ng-show="isAuthenticated"></aside>
 
-        </div>
+    </div>
 
     <div ng-include="'views/footer.html'" ng-show="isAuthenticated"></div>
 
@@ -83,7 +83,9 @@
     <script src="bower_components/angular-http-auth/src/http-auth-interceptor.js"></script>
     <script src="bower_components/angular-base64/angular-base64.js"></script>
     <script src="bower_components/angular-base64/angular-base64.min.js"></script>
-    <script src="bower_components/sca-ngular/sca-ngular.js"></script>
+    <script src="bower_components/br-validations/releases/br-validations.js"></script>
+    <script src="bower_components/string-mask/src/string-mask.js"></script>
+    <script src="bower_components/angular-input-masks/angular-input-masks-standalone.min.js"></script>
     <!-- endbower -->
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/pretty-photo/js/jquery.prettyPhoto.js"></script>
@@ -97,6 +99,10 @@
     <!-- Filters -->
     <script src="scripts/filters/realBrasileiro.js"></script>
     <script src="scripts/filters/option.js"></script>
+
+    <!-- Directives -->
+    <script src="scripts/directives/authentication.js"></script>
+    <script src="scripts/directives/shake-that.js"></script>
 
     <!-- servicos -->
     <script src="scripts/services/TestService.js"></script>

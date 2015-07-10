@@ -78,8 +78,6 @@ public class OnSuccessAdvice {
             ResponseEntity responseEntity;
 
             MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-            Locale locale = new Locale("pt_BR");
-
             String prefixCode = ON_SUCCESS + pjp.getTarget().getClass().getSimpleName() + "." + methodName;
 
             String titleCode = prefixCode + "." + TITLE;
@@ -98,11 +96,11 @@ public class OnSuccessAdvice {
                     if (HttpStatus.CREATED.equals(httpStatus)) objectBody = httpEntity.getBody();
                 }
 
-                String title = messageSource.getMessage(titleCode, null, SUCESSO_TITLE, locale);
+                String title = messageSource.getMessage(titleCode, null, SUCESSO_TITLE, Locale.getDefault());
                 headers.add(TITLE, title);
 
-                String sucessoDefault = messageSource.getMessage(SUCESSO_MSG, null, locale);
-                String message = messageSource.getMessage(messageCode, null, sucessoDefault, locale);
+                String sucessoDefault = messageSource.getMessage(SUCESSO_MSG, null, Locale.getDefault());
+                String message = messageSource.getMessage(messageCode, null, sucessoDefault, Locale.getDefault());
                 headers.add(MESSAGE, message);
 
                 return new ResponseEntity(objectBody, headers, httpStatus);

@@ -80,8 +80,8 @@
                                 </label>
 
                                 <div class="checkbox" ng-repeat="cat in categories">
-                                    <label for="checkboxes1-{{$index}}" ng-hide="currentSurvey.known[$index].answer == true">
-                                        <input type="checkbox" name="checkboxes1" id="checkboxes2-{{$index}}" value="cat.id"
+                                    <label for="checkboxes2-{{$index}}" ng-hide="currentSurvey.known[$index].answer == true">
+                                        <input type="checkbox" name="checkboxes2" id="checkboxes2-{{$index}}" value="cat.id"
                                                ng-model="currentSurvey.unknown[$index].answer">
                                         {{cat.name}}
                                     </label>

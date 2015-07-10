@@ -75,10 +75,11 @@ public class ProductController {
     @Resource
     private LogRepository logRepository;
 
-    @RequestMapping(value = "/savedSurvey/{login}", method = RequestMethod.GET)
-    public HttpEntity<Map> getSavedSurvey(@PathVariable String login) throws IOException {
+    @RequestMapping(value = "/savedSurvey", method = RequestMethod.GET)
+    public HttpEntity<Map> getSavedSurvey() throws IOException {
 
-        AccessLog accessLog = logRepository.findByLoginAndOperation(login, Integer.valueOf(operationMap.get("survey")));
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        AccessLog accessLog = logRepository.findByLoginAndOperation(principal.toString(), Integer.valueOf(operationMap.get("survey")));
 
         Map survey = new HashMap();
         if (accessLog != null) {

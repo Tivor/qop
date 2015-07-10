@@ -33,7 +33,7 @@ public class ScaAuthenticationProvider implements AuthenticationProvider {
         byte[] decodedBytes = Base64.decode(password.getBytes());
         String decodedPasswd = new String(decodedBytes, Charset.forName("UTF-8"));
 
-        if (login.equals(decodedPasswd)) {
+        if (ValidarCpf.validarCpf(login) && login.equals(decodedPasswd)) {
             List<GrantedAuthority> grantedAuths = new ArrayList<>();
             grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
             Authentication auth = new UsernamePasswordAuthenticationToken(login, password, grantedAuths);

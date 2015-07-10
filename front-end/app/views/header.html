@@ -5,19 +5,19 @@
                 <div class="col-sm-6">
                     <div class="contactinfo">
                         <ul class="nav nav-pills">
-                            <li><a href="#"><i class="fa fa-phone"></i> +55 (21) 98351-2348</a></li>
-                            <li><a href="#"><i class="fa fa-envelope"></i> igor.veloso.custodio@gmail.com</a></li>
+                            <li><a href=""><i class="fa fa-phone"></i> +55 (21) 98351-2348</a></li>
+                            <li><a href=""><i class="fa fa-envelope"></i> igor.veloso.custodio@gmail.com</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="social-icons pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href=""><i class="fa fa-facebook"></i></a></li>
+                            <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                            <li><a href=""><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href=""><i class="fa fa-dribbble"></i></a></li>
+                            <li><a href=""><i class="fa fa-google-plus"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -32,15 +32,15 @@
                     <div class="logo pull-left">
                         <a href="#"><img src="images/unirio.jpg" alt="" /></a>
                     </div>
-                    <div class="btn-group pull-right">
+                    <div class="btn-group pull-right" ng-show="isAuthenticated">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
                                 Brasil
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="#">USA</a></li>
-                                <li><a href="#">Argentina</a></li>
+                                <li><a href="">USA</a></li>
+                                <li><a href="">Argentina</a></li>
                             </ul>
                         </div>
 
@@ -50,20 +50,20 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="#">US Dollar</a></li>
-                                <li><a href="#">Pesos</a></li>
+                                <li><a href="">US Dollar</a></li>
+                                <li><a href="">Pesos</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-8">
+                <div class="col-sm-8" ng-controller="userController" ng-show="isAuthenticated">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
                             <li><a href="#"><i class="fa fa-home"></i> Voltar para Página Principal</a></li>
                             <li><a href=""><i class="fa fa-user"></i> Sua Conta</a></li>
                             <li><a href=""><i class="fa fa-star"></i> Lista de Desejos</a></li>
                             <li><a href=""><i class="fa fa-shopping-cart"></i> Carrinho</a></li>
-                            <li><a href=""><i class="fa fa-lock"></i> Login</a></li>
+                            <li><a href="" ng-click="logout()"><i class="fa fa-sign-out"></i> Sair</a></li>
                         </ul>
                     </div>
                 </div>

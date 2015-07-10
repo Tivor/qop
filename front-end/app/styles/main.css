@@ -1428,6 +1428,7 @@ h2.title {
 /*************************
 *******login page CSS******
 **************************/
+.login-holder{position:relative;-webkit-animation: login-animate 1s; /* Chrome, Safari, Opera */animation: login-animate 1s;}
 
 #form {
   display: block;
@@ -1889,7 +1890,7 @@ h2.title {
 
 
 .shopper-info .btn-primary {
-  background: #FE980F;
+  background: #428bca;
   border: 0 none;
   border-radius: 0;
   margin-right: 15px;
@@ -2084,7 +2085,7 @@ h2.title {
 .blog-post-area  
 .single-blog-post 
 .btn-primary {
-  background:#FE980F;
+  background:#428bca;
   border: medium none;
   border-radius: 0;
   color: #FFFFFF;
@@ -2272,7 +2273,7 @@ h2.title {
 
 .media-list .btn-primary, 
 .commnets .btn-primary {
-  background:#FC9A11;
+  background:#428bca;
   border: 0 none;
   border-radius: 0;
   color: #FFFFFF;
@@ -2396,7 +2397,7 @@ h2.title {
 }
 
 .btn.btn-primary {
-  background:#FE980F;
+  background:#428bca;
   border: 0 none;
   border-radius: 0;
   margin-top: 16px;
@@ -2572,10 +2573,29 @@ hr {
 }
 
 .tachado {
-text-decoration:line-through;
+    text-decoration:line-through;
 }
 
 h4 {
     margin-top : 0px !important;
     margin-bottom : 15px !important;
+}
+
+.center {
+     float: none;
+     margin-left: auto;
+     margin-right: auto;
+}
+
+@keyframes shake {
+  0% {transform: translateX(0);}
+  12.5% {transform: translateX(-6px) rotateY(-5deg)}
+  37.5% {transform: translateX(5px) rotateY(4deg)}
+  62.5% {transform: translateX(-3px) rotateY(-2deg)}
+  87.5% {transform: translateX(2px) rotateY(1deg)}
+  100% {transform: translateX(0)}
+}
+
+.shake {
+  animation: shake 400ms ease-in-out;
 }

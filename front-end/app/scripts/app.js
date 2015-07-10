@@ -18,8 +18,9 @@ var app = angular.module('qopApp', [
     'toaster',
     'ui.bootstrap',
     'ui.slider',
-    'sca-ngular',
-    'brantwills.paging'
+    'authentication',
+    'brantwills.paging',
+    'ui.utils.masks'
 ]);
 //configura rotas
 app.config(['$routeProvider', function ($routeProvider) {
@@ -108,7 +109,7 @@ app.config(function (datepickerConfig, datepickerPopupConfig) {
 
 });
 
-angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
+angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition', 'ui.bootstrap'])
     .controller('CarouselController', ['$scope', '$timeout', '$transition', '$q', function($scope, $timeout, $transition, $q) {
 }]).directive('carousel', [function() {
     return {
