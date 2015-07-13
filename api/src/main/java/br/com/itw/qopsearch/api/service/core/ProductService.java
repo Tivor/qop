@@ -6,8 +6,10 @@
  */
 package br.com.itw.qopsearch.api.service.core;
 
+import br.com.itw.qopsearch.api.persistence.LogRepository;
 import br.com.itw.qopsearch.api.persistence.ProductRepository;
 import br.com.itw.qopsearch.api.service.IProductService;
+import br.com.itw.qopsearch.domain.AccessLog;
 import br.com.itw.qopsearch.domain.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
 
 /**
  * CRUD Rest Json 'Controller' for entityProduct
@@ -31,6 +34,9 @@ class ProductService implements IProductService {
 
     @Resource(name = "productRepository")
     private ProductRepository productRepository;
+
+    @Resource
+    private LogRepository logRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -71,5 +77,36 @@ class ProductService implements IProductService {
         return productRepository.create(product);
     }
 
+    @Override
+    @Transactional
+    public void logOperation(String json, Integer operation, String login) {
+        AccessLog accessLog = new AccessLog();
+
+        accessLog.setLogin(login);
+        accessLog.setOperation(operation);
+
+        accessLog.setParams(json);
+        accessLog.setRegister(Calendar.getInstance().getTime());
+
+        logRepository.save(accessLog);
+    }
+
+    @Override
+    @Transactional
+    public void logSurvey(String json, Integer operation, String login) {
+
+        AccessLog accessLog = logRepository.findByLoginAndOperation(login, operation);
+        if (accessLog == null) {
+            accessLog = new AccessLog();
+        }
+
+        accessLog.setLogin(login);
+        accessLog.setOperation(operation);
+
+        accessLog.setParams(json);
+        accessLog.setRegister(Calendar.getInstance().getTime());
+
+        logRepository.save(accessLog);
+    }
 
 }

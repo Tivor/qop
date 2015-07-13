@@ -10,6 +10,7 @@ import br.com.itw.qopsearch.api.persistence.CategoryRepository;
 import br.com.itw.qopsearch.api.persistence.FeatureRepository;
 import br.com.itw.qopsearch.api.persistence.LogRepository;
 import br.com.itw.qopsearch.api.persistence.ProductRepository;
+import br.com.itw.qopsearch.api.service.IProductService;
 import br.com.itw.qopsearch.domain.AccessLog;
 import br.com.itw.qopsearch.domain.Category;
 import br.com.itw.qopsearch.domain.Feature;
@@ -20,17 +21,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +46,9 @@ public class ProductController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
     private static Map<String, Integer> operationMap = new HashMap();
+
+    @Resource
+    private IProductService productService;
 
     static {
         operationMap.put("survey", Integer.valueOf(0));
@@ -82,10 +83,12 @@ public class ProductController {
         AccessLog accessLog = logRepository.findByLoginAndOperation(principal.toString(), Integer.valueOf(operationMap.get("survey")));
 
         Map survey = new HashMap();
+
         if (accessLog != null) {
             ObjectMapper mapper = new ObjectMapper();
-            survey = (HashMap) mapper.readValue(accessLog.getParams(), HashMap.class);
+            survey = mapper.readValue(accessLog.getParams(), HashMap.class);
         }
+
         return new HttpEntity(survey);
 
     }
@@ -95,16 +98,10 @@ public class ProductController {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Integer survey = Integer.valueOf(operationMap.get("survey"));
-        AccessLog accessLog = logRepository.findByLoginAndOperation(principal.toString(), survey);
-
-        if (accessLog == null) {
-            accessLog = new AccessLog();
-        }
-
         String json = getJsonAsString(answers);
 
-        return logOperation(json, accessLog, survey, principal.toString());
-
+        productService.logSurvey(json, survey, principal.toString());
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 
@@ -113,13 +110,11 @@ public class ProductController {
 
         String json = getJsonAsString(params);
 
-        AccessLog accessLog = new AccessLog();
-
         Integer operation = operationMap.get((String) params.get("op"));
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String login = principal.toString();
-        return logOperation(json, accessLog, operation, login);
+        productService.logOperation(json, operation, principal.toString());
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     private String getJsonAsString(HashMap params) throws JsonProcessingException {
@@ -127,17 +122,7 @@ public class ProductController {
         return mapper.writeValueAsString(params);
     }
 
-    @Transactional
-    private ResponseEntity logOperation(String json, AccessLog accessLog, Integer operation, String login) {
-        accessLog.setLogin(login);
-        accessLog.setOperation(operation);
 
-        accessLog.setParams(json);
-        accessLog.setRegister(Calendar.getInstance().getTime());
-
-        logRepository.save(accessLog);
-        return new ResponseEntity(HttpStatus.OK);
-    }
 
     @RequestMapping(value = "/refine", method = RequestMethod.POST)
     public HttpEntity<ProductResult> refine(@RequestBody List<FeatureFilter> filter) {

@@ -27,7 +27,6 @@ import java.util.List;
  */
 @Entity
 @Table(name = "product")
-@SequenceGenerator(name = "sq_product", sequenceName = "sq_product")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Setter
@@ -37,7 +36,7 @@ import java.util.List;
 public class Product extends BaseEntity<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "sq_product")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", precision = 32, scale = 0)
     private Long id;
 

@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "category")
-@SequenceGenerator(name = "sq_category", sequenceName = "sq_category")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Setter
@@ -25,7 +24,7 @@ import javax.validation.constraints.Size;
 public class Category extends BaseEntity<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "sq_category")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", precision = 32, scale = 0)
     private Long id;
 

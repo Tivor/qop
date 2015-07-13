@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,8 +17,6 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "access_log")
-@SequenceGenerator(name = "sq_log", sequenceName = "sq_log")
-@Inheritance(strategy = InheritanceType.JOINED)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Setter
@@ -26,13 +25,13 @@ import java.util.Date;
 public class AccessLog extends BaseEntity<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "sq_log")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", precision = 32, scale = 0)
     private Long id;
 
-    @NotNull
-    @Size(max = 50)
-    @Column(name = "login", nullable = false, length = 50)
+    @NotBlank
+    @Size(min = 11, max = 11)
+    @Column(name = "login", nullable = false,  length = 11)
     String login;
 
     @NotNull
@@ -40,8 +39,7 @@ public class AccessLog extends BaseEntity<Long> {
     Integer operation;
 
     @NotNull
-    @Column(name = "params")
-    @Lob
+    @Column(name = "params", length = 5000)
     String params;
 
     @NotNull

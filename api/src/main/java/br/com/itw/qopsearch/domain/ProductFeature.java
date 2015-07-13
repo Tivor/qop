@@ -27,7 +27,6 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "product_feature")
-@SequenceGenerator(name = "sq_prod_feat", sequenceName = "sq_prod_feat")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -38,7 +37,7 @@ import javax.validation.constraints.NotNull;
 public class ProductFeature extends BaseEntity<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "sq_prod_feat")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", precision = 32, scale = 0)
     private Long id;
 

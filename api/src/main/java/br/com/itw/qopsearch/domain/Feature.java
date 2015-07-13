@@ -27,7 +27,6 @@ import java.util.List;
  */
 @Entity
 @Table(name = "feature")
-@SequenceGenerator(name = "sq_feature", sequenceName = "sq_feature")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Setter
@@ -37,7 +36,7 @@ import java.util.List;
 public class Feature extends BaseEntity<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "sq_feature")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", precision = 32, scale = 0)
     private Long id;
 

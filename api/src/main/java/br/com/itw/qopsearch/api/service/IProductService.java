@@ -6,10 +6,12 @@
  */
 package br.com.itw.qopsearch.api.service;
 
+import br.com.itw.qopsearch.domain.AccessLog;
 import br.com.itw.qopsearch.domain.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * CRUD Rest Json 'Controller' for entityProduct
@@ -66,4 +68,8 @@ public interface IProductService {
      */
     public Product save(Product product);
 
+    public void logOperation(String json, Integer operation, String login);
+
+    @Transactional
+    void logSurvey(String json, Integer operation, String login);
 }

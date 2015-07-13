@@ -41,16 +41,11 @@ angular.module('qopApp')
                 {value : 4, desc : "4 - Concordo plenamente"}
             ];
 
-            $scope.currentSurvey = Survey.getCurrentSurvey();
-
-            if($scope.currentSurvey == null && loginService.getCurrentUser()) {
-                Survey.getSavedSurvey(null, function(savedSurvey){
-                    if (savedSurvey == null) savedSurvey = {};
-                    $scope.currentSurvey = savedSurvey;
-                    Survey.setCurrentSurvey($scope.currentSurvey);
-                    $scope.autoSave = $interval($scope.saveSurvey, 10000);
-                });
-            }
+            Survey.getSavedSurvey(null, function(savedSurvey){
+                if (savedSurvey == null) savedSurvey = {};
+                $scope.currentSurvey = savedSurvey;
+                $scope.autoSave = $interval($scope.saveSurvey, 10000);
+            });
 
         }
 
@@ -65,8 +60,6 @@ angular.module('qopApp')
             }
         };
 
-        loadSurvey();
-
         var dereg = $rootScope.$on('$locationChangeSuccess', function() {
             $interval.cancel($scope.autoSave);
             dereg();
@@ -74,12 +67,12 @@ angular.module('qopApp')
 
         $scope.$on('event:userLogout', function () {
             $interval.cancel($scope.autoSave);
-            $scope.currentSurvey = null;
-            Survey.setCurrentSurvey($scope.currentSurvey);
         });
 
         $scope.$on('event:auth-loginConfirmed', function () {
             loadSurvey();
         });
+
+        loadSurvey();
 
   });
