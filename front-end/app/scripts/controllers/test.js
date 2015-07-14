@@ -45,7 +45,7 @@ angular.module('qopApp')
           $scope.findAll = function() {
 
               if ($scope.idcat > 0)
-                  Test.findAllByCategory({idcat: $scope.idcat, testcase: $scope.testCase}, function(response){
+                  Test.findAllByCategory({idcat: $scope.idcat}, function(response){
                     $scope.productIds = response.selectedProducts;
                     $scope.products = response.refinementResult;
                     $scope.total = $scope.productIds.length;
@@ -58,7 +58,7 @@ angular.module('qopApp')
           $scope.findFeatures = function() {
 
                 if ($scope.idcat > 0)
-                    Test.getFeatures({idcat: $scope.idcat}, function(response){
+                    Test.getFeatures({idcat: $scope.idcat, testcase: $scope.testCase}, function(response){
                         $scope.features = response;
                     });
             }

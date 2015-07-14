@@ -13,9 +13,9 @@ angular.module('qopApp').factory('Test', function ($resource) {
     return $resource('/qopsearch/api/Product/:id', {}, {
 //        'hasPendencia': { method: 'POST', url: '/cliq/api/Controle/hasPendencia'},
 //        'historicoLancamentos': {method: 'GET', url:'/cliq/api/Controle/historicoLancamentoValores/:medidor', params:{medidor:'@medidor'}, isArray: true},
-        'findAllByCategory': { method: 'GET', url: '/qopsearch/api/Product/findAll/:idcat/:testcase', params:{idcat:'@idcat', testcase:'@testcase'}},
+        'findAllByCategory': { method: 'GET', url: '/qopsearch/api/Product/findAll/:idcat', params:{idcat:'@idcat'}},
         'getCategories': { method: 'GET', url: '/qopsearch/api/Product/getCategories', isArray: true},
-        'getFeatures': { method: 'GET', url: '/qopsearch/api/Product/getFeatures/:idcat', params:{idcat:'@idcat'}, isArray: true},
+        'getFeatures': { method: 'GET', url: '/qopsearch/api/Product/getFeatures/:idcat/:testcase', params:{idcat:'@idcat', testcase:'@testcase'}, isArray: true},
         'refine': { method: 'POST', url: '/qopsearch/api/Product/refine'},
         'log': { method: 'POST', url: '/qopsearch/api/Product/log'}
     });

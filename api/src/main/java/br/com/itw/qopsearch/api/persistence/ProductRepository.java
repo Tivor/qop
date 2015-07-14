@@ -22,12 +22,12 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
 
     @Query("SELECT distinct p.id " +
             "FROM Product p " +
-            "where p.category.id = :idCat and testCase = :testCase")
-    @Cacheable("findIdsByCategoryAndTestCase")
-    public Integer[] findIdsByCategoryAndTestCase(@Param("idCat") Long idCat, @Param("testCase") Integer testCase);
+            "where p.category.id = :idCat")
+    @Cacheable("findIdsByCategory")
+    public Integer[] findIdsByCategory(@Param("idCat") Long idCat);
 
-    @Cacheable("findByCategoryIdAndTestCase")
-    public List<Product> findByCategoryIdAndTestCase(Long idCat, Integer testCase);
+    @Cacheable("findProductByCategoryId")
+    public List<Product> findByCategoryId(Long idCat);
 
 
 }

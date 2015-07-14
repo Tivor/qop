@@ -29,9 +29,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * CRUD Rest Json 'Controller' for entityProduct
@@ -44,6 +42,9 @@ import java.util.Map;
 public class ProductController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+    public static final int TEST_CASE_ALL = 3;
+    public static final int TEST_CASE_FEATURE = 1;
+    public static final int TEST_CASE_NEED = 2;
 
     private static Map<String, Integer> operationMap = new HashMap();
 
@@ -137,12 +138,12 @@ public class ProductController {
      *
      * @return
      */
-    @RequestMapping(value = "/findAll/{idCat}/{testCase}", method = RequestMethod.GET)
-    public HttpEntity<ProductResult> findAll(@PathVariable Long idCat, @PathVariable Integer testCase) {
+    @RequestMapping(value = "/findAll/{idCat}", method = RequestMethod.GET)
+    public HttpEntity<ProductResult> findAll(@PathVariable Long idCat) {
 
         ProductResult result = new ProductResult(
-                productRepository.findIdsByCategoryAndTestCase(idCat, testCase),
-                productRepository.findByCategoryIdAndTestCase(idCat, testCase)
+                productRepository.findIdsByCategory(idCat),
+                productRepository.findByCategoryId(idCat)
         );
 
         return new HttpEntity(result);
@@ -156,9 +157,21 @@ public class ProductController {
         return new HttpEntity(categoryList);
     }
 
-    @RequestMapping(value = "/getFeatures/{idCat}", method = RequestMethod.GET)
-    public HttpEntity<List<Feature>> getFeatures(@PathVariable Long idCat) {
+    @RequestMapping(value = "/getFeatures/{idCat}/{testCase}", method = RequestMethod.GET)
+    public HttpEntity<List<Feature>> getFeatures(@PathVariable Long idCat, @PathVariable Integer testCase) {
 
-        return new HttpEntity(featureRepository.findByCategoryId(idCat));
+        List<Feature> features = new ArrayList();
+
+        if (Integer.valueOf(TEST_CASE_ALL).equals(testCase)) {
+            features.addAll(featureRepository.findByCategoryIdAndTestCase(idCat, Integer.valueOf(TEST_CASE_FEATURE)));
+            features.addAll(featureRepository.findByCategoryIdAndTestCase(idCat, Integer.valueOf(TEST_CASE_NEED)));
+
+            Collections.shuffle(features);
+        } else {
+            features = featureRepository.findByCategoryIdAndTestCase(idCat, testCase);
+
+        }
+        return new HttpEntity(features);
+
     }
 }

@@ -39,7 +39,7 @@ public class AccessLog extends BaseEntity<Long> {
     Integer operation;
 
     @NotNull
-    @Column(name = "params", length = 5000)
+    @Column(name = "params", length = 50000)
     String params;
 
     @NotNull

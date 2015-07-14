@@ -17,8 +17,8 @@ import java.util.List;
 @Repository
 public interface FeatureRepository extends JpaRepository<Feature, Long>, FeatureRepositoryCustom {
 
-    @Cacheable("findByCategoryId")
-    List<Feature> findByCategoryId(Long idCat);
+    @Cacheable("findFeatureByCategoryId")
+    List<Feature> findByCategoryIdAndTestCase(Long idCat, Integer testCase);
 
 
 }

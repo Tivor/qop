@@ -886,10 +886,6 @@ h2.title {
   color: #696763;
 }
 
-.productinfo img{
-  width: 100%;
-}
-
 .productinfo{
  position:relative;
 }
@@ -901,7 +897,6 @@ h2.title {
   height: 0;
   position: absolute;
   transition: height 500ms ease 0s;
-  width: 100%;
   display: block;
   opacity:;
 }
@@ -2541,6 +2536,15 @@ h2.title {
   position: absolute;
   background-color: #EEE;
   height: 100%;
+}
+
+.coloredSlider .ui-slider-range {
+	background: #ff4050;
+}
+
+.coloredSlider .ui-state-default, .ui-widget-content .ui-state-default {
+	background: none;
+	background-color: #FFF;
 }
 
 a.active-option {
