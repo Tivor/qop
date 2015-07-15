@@ -30,8 +30,8 @@ public class AccessLog extends BaseEntity<Long> {
     private Long id;
 
     @NotBlank
-    @Size(min = 11, max = 11)
-    @Column(name = "login", nullable = false,  length = 11)
+    @Size(min = 3, max = 254)
+    @Column(name = "login", nullable = false)
     String login;
 
     @NotNull

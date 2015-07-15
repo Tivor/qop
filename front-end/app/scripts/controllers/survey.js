@@ -38,13 +38,13 @@ angular.module('qopApp')
                 {value : 1, desc : "Discordo fortemente - 1"},
                 {value : 2, desc : "2"},
                 {value : 3, desc : "3"},
-                {value : 4, desc : "4 - Concordo plenamente"}
+                {value : 4, desc : "4"},
+                {value : 5, desc : "5 - Concordo plenamente"}
             ];
 
             Survey.getSavedSurvey(null, function(savedSurvey){
                 if (savedSurvey == null) savedSurvey = {};
                 $scope.currentSurvey = savedSurvey;
-                $scope.autoSave = $interval($scope.saveSurvey, 10000);
             });
 
         }
@@ -59,15 +59,6 @@ angular.module('qopApp')
 
             }
         };
-
-        var dereg = $rootScope.$on('$locationChangeSuccess', function() {
-            $interval.cancel($scope.autoSave);
-            dereg();
-        });
-
-        $scope.$on('event:userLogout', function () {
-            $interval.cancel($scope.autoSave);
-        });
 
         $scope.$on('event:auth-loginConfirmed', function () {
             loadSurvey();

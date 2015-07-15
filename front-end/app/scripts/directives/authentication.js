@@ -167,14 +167,14 @@ angular.module('authentication', ['http-auth-interceptor', 'base64'])
             template: '<div id="shake-login" class="panel panel-primary" ng-class="{\'panel-danger\' : authenticationError}" ng-controller="loginController" ng-hide="isAuthenticated">' +
                         '<div class="panel-heading">' +
                         '<h3><i class="fa fa-lock">&nbsp;&nbsp;</i><span ng-hide="authenticationError">Acesso Restrito</span>' +
-                        '<span ng-show="authenticationError">CPF ou Senha inválida</span></h3>' +
+                        '<span ng-show="authenticationError">E-mail ou Senha inválida</span></h3>' +
                         '</div><div class="panel-body">' +
                         '<form name="loginForm" shake-that submitted="submitted" submit="submit()">' +
                            '<div class="form-group" ng-class="{\'has-error\': form.email.$invalid && submitted}">' +
-                             '<label for="username" class="control-label">CPF</label>' +
-                             '<input type="text" class="form-control" id="username" name="username" ' +
-                             'ng-class="{\'alert-warning\' : loginForm.username.$error.required || loginForm.username.$error.cpf, \'alert-success\' : loginForm.username.$valid}" ' +
-                             'placeholder="Preencha com o seu CPF" ng-model="username" ng-model-options="{updateOn: \'blur\'}" required ui-br-cpf-mask>' +
+                             '<label for="username" class="control-label">E-mail</label>' +
+                             '<input type="email" class="form-control" id="username" name="username" ' +
+                             'ng-class="{\'alert-warning\' : loginForm.username.$error.required || loginForm.username.$error.email, \'alert-success\' : loginForm.username.$valid}" ' +
+                             'placeholder="Preencha com o seu E-mail" ng-model="username" ng-model-options="{updateOn: \'blur\'}" required>' +
                            '</div>' +
                            '<div class="form-group" ng-class="{\'has-error\': form.password.$invalid && submitted}">' +
                              '<label for="password" class="control-label">Senha</label>' +

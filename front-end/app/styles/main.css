@@ -1014,7 +1014,12 @@ h2.title {
   text-transform: uppercase;
 }
 
-.category-tab ul  li  a:hover{
+.category-tab ul li a:hover{
+	background:#FE980F;
+	color:#fff;
+}
+
+.category-tab ul li a.active{
 	background:#FE980F;
 	color:#fff;
 }

@@ -128,10 +128,10 @@
                 <ul class="list-group">
                     <li class="list-group-item" ng-repeat="quest in aboutTest[$index].question">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="control-label">{{quest.quest}}{{test}}</label>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <label class="btn btn-default" ng-repeat="opt in options"
                                        ng-class="{'btn-info' : currentSurvey.aboutTest[test].question[$parent.$index].value == opt.value}">
                                     <input value="{{opt.value}}" type="radio"

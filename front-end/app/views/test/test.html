@@ -22,7 +22,7 @@
                 <div class="category-tab"><!--category-tab-->
                     <ul class="nav nav-tabs">
                         <li ng-repeat="cat in categories">
-                            <a ng-click="changeCategory({{cat.id}})">{{cat.name}}</a>
+                            <a ng-class="{active: cat.id == idcat}" ng-click="changeCategory({{cat.id}})">{{cat.name}}</a>
                         </li>
                     </ul>
                 </div>
