@@ -150,14 +150,14 @@
            diskPersistent="false"
            timeToIdleSeconds="6000" timeToLiveSeconds="6000"/>
 
-    <cache name="findIdsByCategory" maxElementsInMemory="500" eternal="false" diskPersistent="false"
-           timeToIdleSeconds="6000" timeToLiveSeconds="6000"/>
+    <!--<cache name="findIdsByCategory" maxElementsInMemory="500" eternal="false" diskPersistent="false"-->
+           <!--timeToIdleSeconds="6000" timeToLiveSeconds="6000"/>-->
 
     <cache name="findFeatureByCategoryId" maxElementsInMemory="500" eternal="false" diskPersistent="false"
            timeToIdleSeconds="6000" timeToLiveSeconds="6000"/>
 
-    <cache name="findProductByCategoryId" maxElementsInMemory="500" eternal="false" diskPersistent="false"
-           timeToIdleSeconds="6000" timeToLiveSeconds="6000"/>
+    <!--<cache name="findProductByCategoryId" maxElementsInMemory="500" eternal="false" diskPersistent="false"-->
+           <!--timeToIdleSeconds="6000" timeToLiveSeconds="6000"/>-->
 
     <cache name="getCategories" maxElementsInMemory="500" eternal="false" diskPersistent="false"
            timeToIdleSeconds="6000" timeToLiveSeconds="6000"/>

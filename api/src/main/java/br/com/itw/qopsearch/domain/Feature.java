@@ -66,6 +66,10 @@ public class Feature extends BaseEntity<Long> {
     @Column(name = "test_case", nullable = false)
     Integer testCase;
 
+    @NotNull
+    @Column(name = "step", nullable = false)
+    Double step;
+
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "feature")
     private List<ProductFeature> productFeatureCollection;

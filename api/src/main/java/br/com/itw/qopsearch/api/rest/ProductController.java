@@ -14,6 +14,7 @@ import br.com.itw.qopsearch.api.service.IProductService;
 import br.com.itw.qopsearch.domain.AccessLog;
 import br.com.itw.qopsearch.domain.Category;
 import br.com.itw.qopsearch.domain.Feature;
+import br.com.itw.qopsearch.domain.Product;
 import br.com.itw.qopsearch.domain.dto.FeatureFilter;
 import br.com.itw.qopsearch.domain.dto.ProductResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -139,14 +140,8 @@ public class ProductController {
      * @return
      */
     @RequestMapping(value = "/findAll/{idCat}", method = RequestMethod.GET)
-    public HttpEntity<ProductResult> findAll(@PathVariable Long idCat) {
-
-        ProductResult result = new ProductResult(
-                productRepository.findIdsByCategory(idCat),
-                productRepository.findByCategoryId(idCat)
-        );
-
-        return new HttpEntity(result);
+    public HttpEntity<List<Product>> findAll(@PathVariable Long idCat) {
+        return new HttpEntity(productRepository.findByCategoryId(idCat));
     }
 
     @RequestMapping(value = "/getCategories", method = RequestMethod.GET)

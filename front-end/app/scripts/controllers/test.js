@@ -12,7 +12,6 @@ angular.module('qopApp')
         $scope.testCase = $routeParams.testcase;
 
         $scope.products = [];
-        $scope.productIds = [];
 
         Test.getCategories(null, function(response){
             $scope.categories = response;
@@ -46,9 +45,8 @@ angular.module('qopApp')
 
               if ($scope.idcat > 0)
                   Test.findAllByCategory({idcat: $scope.idcat}, function(response){
-                    $scope.productIds = response.selectedProducts;
-                    $scope.products = response.refinementResult;
-                    $scope.total = $scope.productIds.length;
+                    $scope.products = response;
+                    $scope.total = $scope.products.length;
                     $scope.doPaging($scope.page, $scope.pageSize, false);
                   });
           }

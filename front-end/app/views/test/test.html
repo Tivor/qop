@@ -42,7 +42,7 @@
                                  ng-init="feat.filterValue = [feat.optionValues[0].valueOption, feat.optionValues[1].valueOption]">
                                 <h4>{{feat.name}}</h4>
 
-                                <div ui-slider="{range: true, stop: changeFilterRange}"
+                                <div ui-slider="{range: true, stop: changeFilterRange, step: {{feat.step}}}"
                                      ng-model="feat.filterValue"
                                      min="{{feat.optionValues[0].valueOption}}"
                                      max="{{feat.optionValues[1].valueOption}}"></div>
@@ -100,7 +100,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="features_items"><!--features_items-->
-                            <div ng-repeat="product in productPage" class="col-sm-4">
+                            <div ng-repeat="product in productPage" ng-class="{'col-sm-2' : idcat == 2, 'col-sm-4' : idcat != 2}">
                                 <div class="product-image-wrapper">
                                     <div class="single-products">
                                         <div class="productinfo text-center">
@@ -110,7 +110,7 @@
 
                                             <p>{{product.name}}</p>
                                             <a href="" class="btn btn-default add-to-cart" ng-click="addToCart(product)">
-                                                <i class="fa fa-shopping-cart"></i>Adicionar ao carrinho
+                                                <i class="fa fa-shopping-cart"></i>Adicionar
                                             </a>
                                         </div>
                                         <div class="product-overlay">
@@ -121,7 +121,7 @@
 
                                                 <p>{{product.name}}</p>
                                                 <a href="" class="btn btn-default add-to-cart" ng-click="addToCart(product)"><i
-                                                        class="fa fa-shopping-cart"></i>Adicionar ao carrinho</a>
+                                                        class="fa fa-shopping-cart"></i>Adicionar</a>
                                             </div>
                                         </div>
                                     </div>
@@ -135,7 +135,7 @@
                                                     <i class="fa fa-star-half-o"></i>
                                                     <i class="fa fa-star-o"></i>
                                                 </b>
-                                                <b class="pull-right">
+                                                <b ng-if="idcat != 2" class="pull-right">
                                                     <i class="fa fa-thumbs-o-down"></i>
                                                     <i class="fa fa-thumbs-o-up" style="padding-left: 15px;"></i>
                                                 </b>
@@ -143,7 +143,7 @@
                                         </div>
                                         <div class="row">
                                             <ul class="nav nav-pills nav-justified">
-                                                <li><a href="" ng-click="addToWishlist(product)"><i
+                                                <li ng-if="idcat != 2"><a href="" ng-click="addToWishlist(product)"><i
                                                         class="fa fa-plus-square"></i>Lista de Desejos</a></li>
                                                 <li><a href="" ng-click="showDetails(product)"><i class="fa fa-tasks"></i>Detalhes</a>
                                                 </li>
