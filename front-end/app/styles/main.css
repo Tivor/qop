@@ -2608,3 +2608,7 @@ h4 {
 .shake {
   animation: shake 400ms ease-in-out;
 }
+
+.opinionSlider .ui-state-default {
+    background-color : #428bca;
+}

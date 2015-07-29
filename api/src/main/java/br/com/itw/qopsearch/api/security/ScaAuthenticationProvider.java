@@ -6,16 +6,15 @@
  */
 package br.com.itw.qopsearch.api.security;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,16 +26,17 @@ public class ScaAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String login = authentication.getName();
-        String password = authentication.getCredentials().toString();
+        String login = authentication.getName().trim().toLowerCase();
+//        String password = authentication.getCredentials().toString();
 
-        byte[] decodedBytes = Base64.decode(password.getBytes());
-        String decodedPasswd = new String(decodedBytes, Charset.forName("UTF-8"));
+//        byte[] decodedBytes = Base64.decode(password.getBytes());
+//        String decodedPasswd = new String(decodedBytes, Charset.forName("UTF-8"));
 
-        if (ValidarEmail.validate(login) && login.split("\\@")[0].equals(decodedPasswd)) {
+        if (EmailValidator.getInstance().isValid(login)) {
+//        if (ValidarEmail.validate(login) && login.split("\\@")[0].equals(decodedPasswd)) {
             List<GrantedAuthority> grantedAuths = new ArrayList<>();
             grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
-            Authentication auth = new UsernamePasswordAuthenticationToken(login, password, grantedAuths);
+            Authentication auth = new UsernamePasswordAuthenticationToken(login, null, grantedAuths);
             return auth;
         } else {
             return null;

@@ -59,6 +59,12 @@ public class Product extends BaseEntity<Long> {
     @Column(name = "price", nullable = false, precision = 10, scale = 2, length = 0)
     BigDecimal price;
 
+    @Column(name="rating")
+    Integer rating;
+
+    @Column(name="sold")
+    Integer sold;
+
     @NotNull
     @ManyToOne
     @JoinColumn(name = "id_category", nullable = false)

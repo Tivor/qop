@@ -2,27 +2,41 @@
     <div class="container" ng-controller="TestCtrl">
 
         <div class="row">
-            <div class="mainmenu pull-left">
-                <ul class="nav navbar-nav collapse navbar-collapse">
-                    <li class="dropdown"><a href="">Testes<i class="fa fa-angle-down"></i></a>
-                        <ul role="menu" class="sub-menu">
-                            <li><a href="#/test/1">Teste 1</a></li>
-                            <li><a href="#/test/2">Teste 2</a></li>
-                            <li><a href="#/test/3">Teste 3</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#/survey">Questionário</a>
-                </ul>
+            <div class="col-sm-9">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="mainmenu pull-left">
+                    <ul class="nav navbar-nav collapse navbar-collapse">
+                        <li class="dropdown"><a href="">Testes<i class="fa fa-angle-down"></i></a>
+                            <ul role="menu" class="sub-menu">
+                                <li><a href="#/test/1">Teste 1</a></li>
+                                <li><a href="#/test/2">Teste 2</a></li>
+                                <li><a href="#/test/3">Teste 3</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#/survey">Questionário</a>
+                    </ul>
+                </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
                 <h3>Escolha uma categoria</h3>
+
                 <div class="category-tab"><!--category-tab-->
                     <ul class="nav nav-tabs">
                         <li ng-repeat="cat in categories">
-                            <a ng-class="{active: cat.id == idcat}" ng-click="changeCategory({{cat.id}})">{{cat.name}}</a>
+                            <a ng-class="{active: cat.id == idcat}"
+                               ng-click="changeCategory({{cat.id}})">{{cat.name}}</a>
                         </li>
                     </ul>
                 </div>
@@ -83,8 +97,22 @@
 
             <div class="col-sm-9 pull-right">
 
+                <div class="row" ng-show="idcat">
+                    <div class="col-sm-12 pull-left">
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-info">
+                                <h4 style="margin-bottom: 0px !important;">
+                                    <span style="vertical-align: bottom;"><i class="fa fa-info-circle"></i>
+                                        O resultado é meramente ilustrativo (ainda em construção).
+                                    </span>
+                                </h4>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-8 pull-left">
                         <div align="center">
                             <paging class="large"
                                     page="page"
@@ -95,32 +123,48 @@
                             </paging>
                         </div>
                     </div>
+                    <div class="pull-right col-sm-4">
+                        <div class="form-inline" ng-show="idcat">
+                            <label for="order" class="control-label">Ordenado por: </label>
+                            <select id="order" class="form-control" ng-model="order">
+                                <option value="">-- Selecione --</option>
+                                <option value="price">Menor Preço</option>
+                                <option value="-sold">Mais Vendidos</option>
+                                <option value="-rating">Mais Indicados</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="features_items"><!--features_items-->
-                            <div ng-repeat="product in productPage" ng-class="{'col-sm-2' : idcat == 2, 'col-sm-4' : idcat != 2}">
+                            <div ng-repeat="product in productPage"
+                                 ng-class="{'col-sm-2' : idcat == 2, 'col-sm-4' : idcat != 2}">
                                 <div class="product-image-wrapper">
                                     <div class="single-products">
                                         <div class="productinfo text-center">
-                                            <img class="img-responsive" ng-src="images/products/{{product.image}}" alt=""/>
+                                            <img class="img-responsive" ng-src="images/products/{{product.image}}"
+                                                 alt=""/>
 
                                             <h2>{{product.price | currency}}</h2>
 
                                             <p>{{product.name}}</p>
-                                            <a href="" class="btn btn-default add-to-cart" ng-click="addToCart(product)">
+                                            <a href="" class="btn btn-default add-to-cart"
+                                               ng-click="addToCart(product)">
                                                 <i class="fa fa-shopping-cart"></i>Adicionar
                                             </a>
                                         </div>
                                         <div class="product-overlay">
-                                            <img class="img-responsive" ng-src="images/products/{{product.image}}" alt=""/>
+                                            <img class="img-responsive" ng-src="images/products/{{product.image}}"
+                                                 alt=""/>
 
                                             <div class="overlay-content">
                                                 <h2>{{product.price | currency}}</h2>
 
                                                 <p>{{product.name}}</p>
-                                                <a href="" class="btn btn-default add-to-cart" ng-click="addToCart(product)"><i
+                                                <a href="" class="btn btn-default add-to-cart"
+                                                   ng-click="addToCart(product)"><i
                                                         class="fa fa-shopping-cart"></i>Adicionar</a>
                                             </div>
                                         </div>
@@ -129,11 +173,9 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <b class="pull-left">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-half-o"></i>
-                                                    <i class="fa fa-star-o"></i>
+                                                    <i ng-repeat="n in range(1,product.rating)" class="fa fa-star"></i>
+                                                    <i ng-repeat="n in range(product.rating + 1,5)"
+                                                       class="fa fa-star-o"></i>
                                                 </b>
                                                 <b ng-if="idcat != 2" class="pull-right">
                                                     <i class="fa fa-thumbs-o-down"></i>
@@ -145,7 +187,8 @@
                                             <ul class="nav nav-pills nav-justified">
                                                 <li ng-if="idcat != 2"><a href="" ng-click="addToWishlist(product)"><i
                                                         class="fa fa-plus-square"></i>Lista de Desejos</a></li>
-                                                <li><a href="" ng-click="showDetails(product)"><i class="fa fa-tasks"></i>Detalhes</a>
+                                                <li><a href="" ng-click="showDetails(product)"><i
+                                                        class="fa fa-tasks"></i>Detalhes</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -183,7 +226,8 @@
                         <div class="col-sm-12 padding-right">
                             <div class="product-details"><!--product-details-->
                                 <div class="col-sm-4">
-                                    <img class="img-responsive" ng-src="images/products/{{selectedProduct.image}}" alt="">
+                                    <img class="img-responsive" ng-src="images/products/{{selectedProduct.image}}"
+                                         alt="">
                                 </div>
                                 <div class="col-sm-8">
                                     <div class="product-information"><!--/product-information-->
@@ -191,16 +235,25 @@
                                             <h2>{{selectedProduct.name}}</h2>
 
                                             <p>ID: #00PZ{{selectedProduct.id}}</p>
-                                            <img src="images/product-details/rating.png" alt="">
+
+                                            <b class="pull-left">
+                                                <i ng-repeat="n in range(1,selectedProduct.rating)"
+                                                   class="fa fa-star"></i>
+                                                <i ng-repeat="n in range(selectedProduct.rating + 1,5)"
+                                                   class="fa fa-star-o"></i>
+                                            </b>
                                             <span>
                                                 <span>{{selectedProduct.price | currency}}</span>
                                                 <label>Quantidade:</label>
                                                 <input type="text" value="3">
-                                                <button type="button" ng-click="addToCartDetail()" class="btn btn-fefault cart">
+                                                <button type="button" ng-click="addToCartDetail()"
+                                                        class="btn btn-fefault cart">
                                                     <i class="fa fa-shopping-cart"></i>
                                                     Adicionar
                                                 </button>
                                             </span>
+
+                                            <p><b>Vendido até hoje:</b> {{selectedProduct.sold}} unidades</p>
 
                                             <p><b>Disponibilidade:</b> Em estoque</p>
 
@@ -208,7 +261,8 @@
 
                                             <p><b>Marca:</b> E-QOP</p>
                                             <a href="">
-                                                <img src="images/product-details/share.png" class="share img-responsive" alt="">
+                                                <img src="images/product-details/share.png" class="share img-responsive"
+                                                     alt="">
                                             </a>
                                         </div>
                                     </div>

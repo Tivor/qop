@@ -64,6 +64,7 @@ public class ProductController {
         operationMap.put("addToWishlist", Integer.valueOf(8));
         operationMap.put("showDetails", Integer.valueOf(9));
         operationMap.put("addToCartDetail", Integer.valueOf(10));
+        operationMap.put("changeOrder", Integer.valueOf(11));
     }
 
     @Resource

@@ -9,6 +9,15 @@
 angular.module('qopApp')
   .controller('TestCtrl', function($scope, $routeParams, Test, toaster, $filter, $modal) {
 
+        $scope.order = '';
+
+        $scope.range = function(min, max, step){
+            step = step || 1;
+            var input = [];
+            for (var i = min; i <= max; i += step) input.push(i);
+            return input;
+          };
+
         $scope.testCase = $routeParams.testcase;
 
         $scope.products = [];
@@ -111,9 +120,6 @@ angular.module('qopApp')
               $scope.openModalDetail(selectedProduct);
             };
 
-
-
-
             $scope.openModalDetail = function (selectedProduct) {
 
                 var modalInstance = $modal.open({
@@ -129,6 +135,13 @@ angular.module('qopApp')
                 });
             };
 
+            $scope.$watch('order', function(newValue) {
+
+                $scope.products = $filter('orderBy')($scope.products, newValue);
+                $scope.page = 1;
+                $scope.doPaging($scope.page, $scope.pageSize, false);
+                Test.log({op : 'changeOrder', category : $scope.idcat, orderBy: newValue});
+            });
 
   });
 
@@ -149,4 +162,12 @@ angular.module('qopApp')
     $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
     };
+
+    $scope.range = function(min, max, step){
+        step = step || 1;
+        var input = [];
+        for (var i = min; i <= max; i += step) input.push(i);
+        return input;
+      };
+
   });
