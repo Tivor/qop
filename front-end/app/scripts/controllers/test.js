@@ -36,7 +36,7 @@ angular.module('qopApp')
            $scope.idcat = idcat;
            $scope.findAll();
            $scope.findFeatures();
-           Test.log({op : 'changeCategory', oldValue: oldValue, newValue: idcat});
+           Test.log({op : 'changeCategory', testCase: $scope.testCase, oldValue: oldValue, newValue: idcat});
         };
 
          $scope.productPage = [];
@@ -47,7 +47,7 @@ angular.module('qopApp')
               var begin = ((page - 1) * pageSize);
               var end = begin + pageSize;
               $scope.productPage = $scope.products.slice(begin, end);
-              if(doLog) Test.log({op : 'doPaging', tPage: page})
+              if(doLog) Test.log({op : 'doPaging', testCase: $scope.testCase, category: $scope.idcat, tPage: page})
           };
 
           $scope.findAll = function() {
@@ -84,7 +84,7 @@ angular.module('qopApp')
           $scope.changeFilterRange = function(event, ui){
 
             shuffle();
-            Test.log({op: 'changeFilterRange',
+            Test.log({op: 'changeFilterRange', testCase: $scope.testCase, category: $scope.idcat,
                         feature: $scope.features[ui.handle.parentNode.id],
                         values: ui.values});
           };
@@ -92,7 +92,7 @@ angular.module('qopApp')
             $scope.changeFilterOptions = function(feature, value){
 
                 shuffle();
-                Test.log({op: 'changeFilterOptions',
+                Test.log({op: 'changeFilterOptions', testCase: $scope.testCase, category: $scope.idcat,
                               feature: feature,
                               value: value});
             };
@@ -100,23 +100,23 @@ angular.module('qopApp')
 
           $scope.changeFilterNeeds = function(event, ui){
               shuffle();
-              Test.log({op: 'changeFilterNeeds',
+              Test.log({op: 'changeFilterNeeds', testCase: $scope.testCase, category: $scope.idcat,
                           feature: $scope.features[ui.handle.parentNode.id],
                           value: ui.value});
           };
 
             $scope.addToCart = function(product) {
-              Test.log({op: 'addToCart', product: product});
+              Test.log({op: 'addToCart', testCase: $scope.testCase, category: $scope.idcat, product: product});
               toaster.pop('success', 'Sucesso', 'Produto adicionado ao carrinho');
             };
 
             $scope.addToWishlist = function(product) {
-              Test.log({op: 'addToWishlist', product: product});
+              Test.log({op: 'addToWishlist', testCase: $scope.testCase, category: $scope.idcat, product: product});
               toaster.pop('success', 'Sucesso', 'Produto adicionado a lista de desejos');
             };
 
             $scope.showDetails = function(selectedProduct) {
-              Test.log({op: 'showDetails', product: selectedProduct});
+              Test.log({op: 'showDetails', testCase: $scope.testCase, category: $scope.idcat, product: selectedProduct});
               $scope.openModalDetail(selectedProduct);
             };
 
@@ -140,7 +140,7 @@ angular.module('qopApp')
                 $scope.products = $filter('orderBy')($scope.products, newValue);
                 $scope.page = 1;
                 $scope.doPaging($scope.page, $scope.pageSize, false);
-                Test.log({op : 'changeOrder', category : $scope.idcat, orderBy: newValue});
+                Test.log({op : 'changeOrder', testCase: $scope.testCase, category : $scope.idcat, orderBy: newValue});
             });
 
   });
@@ -151,7 +151,7 @@ angular.module('qopApp')
 
 
     $scope.addToCartDetail = function(){
-        Test.log({op: 'addToCartDetail', product: $scope.selectedProduct});
+        Test.log({op: 'addToCartDetail', testCase: $scope.testCase, category: $scope.idcat, product: $scope.selectedProduct});
         toaster.pop('success', 'Sucesso', 'Produto adicionado ao carrinho');
     }
 

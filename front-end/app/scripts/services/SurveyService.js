@@ -13,7 +13,8 @@ angular.module('qopApp').factory('Survey', function ($resource) {
 
     var service = $resource('/qopsearch/api/Product/:id', {}, {
         'logSurvey': { method: 'POST', url: '/qopsearch/api/Product/logSurvey'},
-        'getSavedSurvey': { method: 'GET', url: '/qopsearch/api/Product/savedSurvey' }
+        'getSavedSurvey': { method: 'GET', url: '/qopsearch/api/Product/savedSurvey' },
+        'getQuestions': { method: 'GET', url: '/qopsearch/api/Product/getQuestions', isArray: true }
     });
 
     var currentSurvey = null;

@@ -80,7 +80,7 @@
 
                             <!-- Caso específico de Necessidades -->
                             <div class="text-center filter" ng-if="feat.typeMeasure == 3">
-                                <h4>{{feat.name}} (%)</h4>
+                                <h4>{{feat.name}} <br/>(em grau de Importância)</h4>
 
                                 <div ui-slider="{stop: changeFilterNeeds}" ng-model="feat.filterValue"
                                      min="0" class="coloredSlider"

@@ -150,6 +150,10 @@
            diskPersistent="false"
            timeToIdleSeconds="6000" timeToLiveSeconds="6000"/>
 
+    <cache name="br.com.itw.qopsearch.domain.Question" maxElementsInMemory="100" eternal="false"
+           diskPersistent="false"
+           timeToIdleSeconds="60" timeToLiveSeconds="60"/>
+
     <!--<cache name="findIdsByCategory" maxElementsInMemory="500" eternal="false" diskPersistent="false"-->
            <!--timeToIdleSeconds="6000" timeToLiveSeconds="6000"/>-->
 

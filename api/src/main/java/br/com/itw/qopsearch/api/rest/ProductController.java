@@ -6,15 +6,9 @@
  */
 package br.com.itw.qopsearch.api.rest;
 
-import br.com.itw.qopsearch.api.persistence.CategoryRepository;
-import br.com.itw.qopsearch.api.persistence.FeatureRepository;
-import br.com.itw.qopsearch.api.persistence.LogRepository;
-import br.com.itw.qopsearch.api.persistence.ProductRepository;
+import br.com.itw.qopsearch.api.persistence.*;
 import br.com.itw.qopsearch.api.service.IProductService;
-import br.com.itw.qopsearch.domain.AccessLog;
-import br.com.itw.qopsearch.domain.Category;
-import br.com.itw.qopsearch.domain.Feature;
-import br.com.itw.qopsearch.domain.Product;
+import br.com.itw.qopsearch.domain.*;
 import br.com.itw.qopsearch.domain.dto.FeatureFilter;
 import br.com.itw.qopsearch.domain.dto.ProductResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -79,6 +74,14 @@ public class ProductController {
     @Resource
     private LogRepository logRepository;
 
+    @Resource
+    private QuestionRepository questionRepository;
+
+    @RequestMapping(value = "/getQuestions", method = RequestMethod.GET)
+    public HttpEntity<List<Question>> getQuestions() {
+        return new HttpEntity(questionRepository.findAll(new Sort("id")));
+    }
+
     @RequestMapping(value = "/savedSurvey", method = RequestMethod.GET)
     public HttpEntity<Map> getSavedSurvey() throws IOException {
 
@@ -124,7 +127,6 @@ public class ProductController {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(params);
     }
-
 
 
     @RequestMapping(value = "/refine", method = RequestMethod.POST)

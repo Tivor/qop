@@ -66,9 +66,9 @@
                                 Campo livre para sua escrever opinião:
                             </span>
                         </label>
-                        <textarea ng-model="currentSurvey.freeText" maxlength="2000"
+                        <textarea ng-model="currentSurvey.freeText" maxlength="20000"
                                   style="border: solid 1px #ccc; border-radius: 3px;"></textarea>
-                        <span class="pull-right">{{2000 - currentSurvey.freeText.length}} caracteres restantes</span>
+                        <span class="pull-right">{{20000 - currentSurvey.freeText.length}} caracteres restantes</span>
                     </div>
                 </div>
             </div>
@@ -200,7 +200,7 @@
                     <li class="list-group-item" ng-repeat="quest in aboutTest[$index].question">
                         <div class="row">
                             <div class="col-md-4">
-                                <label class="control-label">{{quest.quest}}{{test}}</label>
+                                <label class="control-label">{{quest.text}}{{test}}</label>
                             </div>
                             <div class="col-md-8">
                                 <label class="btn btn-default" ng-repeat="opt in options"

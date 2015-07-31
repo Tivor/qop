@@ -11,17 +11,17 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * Created by Igor on 17/06/2015.
+ * Created by Igor on 31/07/2015.
  */
 @Entity
-@Table(name = "category")
+@Table(name = "question")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Cacheable
-public class Category extends BaseEntity<Long> {
+public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,8 +29,8 @@ public class Category extends BaseEntity<Long> {
     private Long id;
 
     @NotNull
-    @Size(max = 100)
-    @Column(name = "name", nullable = false, length = 100)
-    private String name;
+    @Size(max = 250)
+    @Column(name = "text", nullable = false, length = 250)
+    private String text;
 
 }

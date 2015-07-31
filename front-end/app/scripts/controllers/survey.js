@@ -15,24 +15,28 @@ angular.module('qopApp')
                 $scope.categories = response;
             });
 
-            var questions = [
-                {quest: "Acho que eu gostaria de usar frequentemente o filtro do Teste ", value : 0},
-                {quest: "Achei desnecessariamente complexo o filtro do Teste ", value : 0},
-                {quest: "Achei fácil de usar o filtro do Teste ", value : 0},
-                {quest: "Acho que seria necessário o apoio de um técnico para poder usar o filtro do Teste ", value : 0},
-                {quest: "Achei que estavam bem integradas as várias funções do filtro no Teste ", value : 0},
-                {quest: "Acho que existem muitas inconsistências no filtro do Teste ", value : 0},
-                {quest: "Imagino que a maioria das pessoas aprenderiam rapidamente a usar o filtro do Teste ", value : 0},
-                {quest: "Achei muito estranho de usar o filtro do Teste ", value : 0},
-                {quest: "Me senti muito seguro/confiante ao utilizar o filtro do Teste ", value : 0},
-                {quest: "Preciso aprender várias coisas antes de usar o filtro do Teste ", value : 0}
-            ];
+            Survey.getQuestions(null, function(response) {
 
-            $scope.aboutTest = [
-                {question : questions},
-                {question : questions},
-                {question : questions}
-            ];
+                $scope.aboutTest = [
+                    {question : response},
+                    {question : response},
+                    {question : response}
+                ];
+
+            });
+
+//            var questions = [
+//                {quest: "Acho que eu gostaria de usar frequentemente as opções como no filtro do Teste ", value : 0},
+//                {quest: "Achei desnecessariamente complexo os textos no filtro do Teste ", value : 0},
+//                {quest: "Achei fácil de entender as opções de filtro do Teste ", value : 0},
+//                {quest: "Acho que seria necessário o apoio de um técnico para poder filtrar pelas opções do Teste ", value : 0},
+//                {quest: "Achei que estavam bem integradas as opções como no filtro do Teste ", value : 0},
+//                {quest: "Acho que existem muitas inconsistências entre as opções de filtro no Teste ", value : 0},
+//                {quest: "Imagino que a maioria das pessoas aprenderiam rapidamente a refinar uma busca com as opções de filtro como no Teste ", value : 0},
+//                {quest: "Achei muito estranho filtrar resultados utilizando opções como no Teste ", value : 0},
+//                {quest: "Me senti muito seguro/confiante ao utilizar as opções de filtro do Teste ", value : 0},
+//                {quest: "Preciso aprender e entender várias coisas antes de usar  opções de filtro como no Teste ", value : 0}
+//            ];
 
             $scope.options = [
                 {value : 1, desc : "Discordo fortemente - 1"},
