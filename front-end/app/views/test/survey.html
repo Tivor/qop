@@ -17,9 +17,9 @@
                     <ul class="nav navbar-nav collapse navbar-collapse">
                         <li class="dropdown"><a href="">Retornar aos Testes<i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
-                                <li><a ng-click="saveSurvey()" href="#/test/1">Teste 1</a></li>
-                                <li><a ng-click="saveSurvey()" href="#/test/2">Teste 2</a></li>
-                                <li><a ng-click="saveSurvey()" href="#/test/3">Teste 3</a></li>
+                                <li><a ng-click="saveSurvey(true)" href="#/test/1">Teste 1</a></li>
+                                <li><a ng-click="saveSurvey(true)" href="#/test/2">Teste 2</a></li>
+                                <li><a ng-click="saveSurvey(true)" href="#/test/3">Teste 3</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -54,29 +54,6 @@
         <div class="panel panel-primary">
 
             <div class="panel-heading">
-                <h3>Seus comentários</h3>
-            </div>
-
-            <div class="panel-body">
-
-                <div class="row">
-                    <div class="col-md-12 form-group">
-                        <label class="control-label">
-                            <span><i class="fa fa-bullhorn"></i>
-                                Campo livre para sua escrever opinião:
-                            </span>
-                        </label>
-                        <textarea ng-model="currentSurvey.freeText" maxlength="20000"
-                                  style="border: solid 1px #ccc; border-radius: 3px;"></textarea>
-                        <span class="pull-right">{{20000 - currentSurvey.freeText.length}} caracteres restantes</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-primary">
-
-            <div class="panel-heading">
                 <h3>Em relação as categorias de produto</h3>
             </div>
 
@@ -88,18 +65,28 @@
                             <li class="list-group-item">
                                 <label class="control-label">
                                     <span><i class="fa fa-location-arrow"></i>
-                                        Informe seu grau de conhecimento real sobre os produtos de cada uma das categorias apresentadas como exemplo neste sistema.
-                                        Sendo 0 "zero" se não possui nenhum conhecimento e 10 "dez" se você se considera um especialista neste produto:
+                                        Informe o seu grau de conhecimento sobre os produtos de cada categoria abaixo.
                                     </span>
                                 </label>
 
                                 <!-- Caso específico de Necessidades -->
                                 <div class="text-center filter" ng-repeat="cat in categories">
-                                    <h4>{{cat.name}} - {{currentSurvey.knowled[$index]}}</h4>
+                                    <h4>{{cat.name}}</h4>
 
-                                    <div ui-slider ng-model="currentSurvey.knowled[$index]"
-                                         min="0" class="opinionSlider" max="10"></div>
-                                    <b class="pull-left">Nada</b> <b class="pull-right">Especialista</b>
+                                    <label>Baixo</label>
+
+                                    <label class="btn btn-default" ng-repeat="opt in options"
+                                           ng-class="{'btn-info' : currentSurvey.knowled[$parent.$index] == opt.value}">
+                                        <input value="{{opt.value}}" type="radio"
+                                               ng-model="currentSurvey.knowled[$parent.$index]">
+                                        {{opt.desc}}
+                                    </label>
+
+                                    <label>Alto</label>
+
+                                    <!--<div ui-slider ng-model="currentSurvey.knowled[$index]"-->
+                                         <!--min="0" class="opinionSlider" max="10"></div>-->
+                                    <!--<b class="pull-left">Nada</b> <b class="pull-right">Especialista</b>-->
 
                                     <div class="row">&nbsp;</div>
                                 </div>
@@ -174,14 +161,14 @@
                 <ul class="list-group">
                     <li class="list-group-item list-group-item-info">
                         <span><i class="fa fa-undo"></i>
-                            Abaixo há 3 conjuntos <b>(iguais)</b> de perguntas para cada Teste que foi realizado.
-                            <p>Retorne ao menu acima caso não tenha terminado ainda de navegar em todos os testes e/ou
+                            Abaixo há 3 conjuntos <b>(iguais)</b> de perguntas para cada Tipo de Filtro (1, 2 ou 3) que foi utilizado.
+                            <p>Retorne ao menu acima caso não tenha terminado ainda de navegar em todos os Tipos e/ou
                                 categorias.</p>
                         </span>
                     </li>
                     <li class="list-group-item list-group-item-warning">
                         <span><i class="fa fa-pencil-square-o"></i>
-                            Para cada pergunta, escolha uma opção entre (1) <b>"Discordo fortemente"</b> e (4) <b>"Concordo
+                            Para cada pergunta, escolha uma opção entre (1) <b>"Discordo fortemente"</b> e (5) <b>"Concordo
                                 plenamente"</b>
                         </span>
                     </li>
@@ -192,27 +179,55 @@
         <!-- Multiple Radios (inline) -->
         <div class="panel panel-primary" ng-repeat="test in [1, 2, 3]">
             <div class="panel-heading">
-                <h3>Sobre o filtro de pesquisa de produtos do <strong>Teste {{test}}</strong></h3>
+                <h3>Sobre o filtro de pesquisa de produtos do <strong>Tipo de Filtro {{test}}</strong></h3>
             </div>
 
             <div class="panel-body">
                 <ul class="list-group">
                     <li class="list-group-item" ng-repeat="quest in aboutTest[$index].question">
                         <div class="row">
-                            <div class="col-md-4">
-                                <label class="control-label">{{quest.text}}{{test}}</label>
+                            <div class="col-md-3">
+                                <label class="control-label">{{quest.text}}:</label>
+                            </div>
+                            <div class="col-md-1">
+                                <label class="control-label">&nbsp;</label>
                             </div>
                             <div class="col-md-8">
+                                <label>Discordo fortemente</label>
                                 <label class="btn btn-default" ng-repeat="opt in options"
                                        ng-class="{'btn-info' : currentSurvey.aboutTest[test].question[$parent.$index].value == opt.value}">
                                     <input value="{{opt.value}}" type="radio"
                                            ng-model="currentSurvey.aboutTest[test].question[$parent.$index].value">
                                     {{opt.desc}}
                                 </label>
+                                <label>Concordo plenamente</label>
                             </div>
                         </div>
                     </li>
                 </ul>
+            </div>
+        </div>
+
+        <div class="panel panel-primary">
+
+            <div class="panel-heading">
+                <h3>Comentários Finais</h3>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label class="control-label">
+                            <span><i class="fa fa-bullhorn"></i>
+                                Sugestões, críticas ou comentários em geral:
+                            </span>
+                        </label>
+                        <textarea ng-model="currentSurvey.freeText" maxlength="20000"
+                                  style="border: solid 1px #ccc; border-radius: 3px;"></textarea>
+                        <span class="pull-right">{{20000 - currentSurvey.freeText.length}} caracteres restantes</span>
+                    </div>
+                </div>
             </div>
         </div>
 

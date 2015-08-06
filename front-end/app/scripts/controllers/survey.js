@@ -39,11 +39,11 @@ angular.module('qopApp')
 //            ];
 
             $scope.options = [
-                {value : 1, desc : "Discordo fortemente - 1"},
+                {value : 1, desc : "1"},
                 {value : 2, desc : "2"},
                 {value : 3, desc : "3"},
                 {value : 4, desc : "4"},
-                {value : 5, desc : "5 - Concordo plenamente"}
+                {value : 5, desc : "5"}
             ];
 
             Survey.getSavedSurvey(null, function(savedSurvey){
