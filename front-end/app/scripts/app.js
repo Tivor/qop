@@ -20,16 +20,16 @@ var app = angular.module('qopApp', [
     'ui.slider',
     'authentication',
     'brantwills.paging',
-    'ui.utils.masks'
+    'ui.utils.masks',
+    'disableAll'
 ]);
 //configura rotas
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/', {templateUrl: 'views/main.html'})
-        .when('/test/:testcase', {templateUrl: 'views/test/test.html'})
+        .when('/test2', {templateUrl: 'views/test/test2.html'})
         .when('/survey', {templateUrl: 'views/test/survey.html'})
         .when('/404', {templateUrl: 'views/404.html'})
-        .when('/details', {templateUrl: 'views/product-details.html'})
         .otherwise({redirectTo: '/'});
 }]);
 

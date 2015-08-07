@@ -9,6 +9,8 @@
 angular.module('qopApp')
   .controller('SurveyCtrl', function($scope, $routeParams, Survey, toaster, $filter, $modal, loginService, Test, $interval, $rootScope) {
 
+        $scope.filterName = ['A', 'B', 'C'];
+
         function loadSurvey() {
 
             Test.getCategories(null, function(response){
@@ -24,19 +26,6 @@ angular.module('qopApp')
                 ];
 
             });
-
-//            var questions = [
-//                {quest: "Acho que eu gostaria de usar frequentemente as opções como no filtro do Teste ", value : 0},
-//                {quest: "Achei desnecessariamente complexo os textos no filtro do Teste ", value : 0},
-//                {quest: "Achei fácil de entender as opções de filtro do Teste ", value : 0},
-//                {quest: "Acho que seria necessário o apoio de um técnico para poder filtrar pelas opções do Teste ", value : 0},
-//                {quest: "Achei que estavam bem integradas as opções como no filtro do Teste ", value : 0},
-//                {quest: "Acho que existem muitas inconsistências entre as opções de filtro no Teste ", value : 0},
-//                {quest: "Imagino que a maioria das pessoas aprenderiam rapidamente a refinar uma busca com as opções de filtro como no Teste ", value : 0},
-//                {quest: "Achei muito estranho filtrar resultados utilizando opções como no Teste ", value : 0},
-//                {quest: "Me senti muito seguro/confiante ao utilizar as opções de filtro do Teste ", value : 0},
-//                {quest: "Preciso aprender e entender várias coisas antes de usar  opções de filtro como no Teste ", value : 0}
-//            ];
 
             $scope.options = [
                 {value : 1, desc : "1"},

@@ -1,0 +1,86 @@
+<section>
+    <div class="container" ng-controller="Test2Ctrl">
+
+        <div class="row">
+            <div class="col-sm-9">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="mainmenu pull-left">
+                    <ul class="nav navbar-nav collapse navbar-collapse">
+                        <li><a href="#/survey">Questionário</a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Escolha uma categoria</h3>
+
+                <div class="category-tab"><!--category-tab-->
+                    <ul class="nav nav-tabs">
+                        <li ng-repeat="cat in categories">
+                            <a ng-class="{active: cat.id == idcat}"
+                               ng-click="changeCategory({{cat.id}})">{{cat.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" disable-all="true">
+            <div class="col-sm-4" ng-repeat="test in allFilters">
+                <div class="left-sidebar">
+                    <h2 ng-if="idcat > 0">Filtro Tipo {{filterName[$index]}}:</h2>
+                    <!--filter-->
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="feat in allFilters[$index]">
+
+                            <!-- Feature com OPTIONS -->
+                            <div class="filter" ng-if="feat.typeMeasure == 1" ng-init="options = getValues(feat.optionValues)">
+                                <h4>{{feat.name}} <span ng-if="feat.textMeasure.trim() != ''">(em </span>{{feat.textMeasure}}<span ng-if="feat.textMeasure.trim() != ''">)</span></h4>
+
+                                <div class="checkbox" ng-repeat="opt in options">
+                                    <label>
+                                        <input type="checkbox">{{opt.valueOption}}
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Feature com OPTIONS -->
+                            <div class="filter" ng-if="feat.typeMeasure == 2">
+                                <h4>{{feat.name}} {{feat.textMeasure}}</h4>
+
+                                <div class="radio" ng-repeat="opt in feat.optionValues">
+                                    <label>
+                                        <input type="radio" ng-model="feat.filterValue" value="{{opt.id}}">{{opt.valueOption}}
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Caso específico de Necessidades -->
+                            <div class="filter" ng-if="feat.typeMeasure == 3">
+                                <h4>{{feat.name}} <br/>(em grau de Importância)</h4>
+
+                                <div class="radio"><label><input type="radio">Não é importante</label></div>
+                                <div class="radio"><label><input type="radio">É um pouco Importante</label></div>
+                                <div class="radio"><label><input type="radio">É muito importante</label></div>
+                                <div class="radio"><label><input type="radio">É essencial</label></div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!--/filter-->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
