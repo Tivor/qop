@@ -42,16 +42,19 @@
                     <h2 ng-if="idcat > 0">Filtro Tipo {{filterName[$index]}}:</h2>
                     <!--filter-->
                     <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="feat in allFilters[$index]">
+                        <li class="list-group-item" ng-repeat="feat in allFilters[$index].values">
 
                             <!-- Feature com OPTIONS -->
                             <div class="filter" ng-if="feat.typeMeasure == 1" ng-init="options = getValues(feat.optionValues)">
                                 <h4>{{feat.name}} <span ng-if="feat.textMeasure.trim() != ''">(em </span>{{feat.textMeasure}}<span ng-if="feat.textMeasure.trim() != ''">)</span></h4>
 
+                                <div ng-if="test.tipo < 3" style="margin-top:50px"></div>
+
                                 <div class="checkbox" ng-repeat="opt in options">
                                     <label>
-                                        <input type="checkbox">{{opt.valueOption}}
+                                        <input type="checkbox" readonly="readonly">{{opt.valueOption}}
                                     </label>
+                                    <div ng-if="test.tipo < 3" style="margin-top:40px"></div>
                                 </div>
                             </div>
 
@@ -59,10 +62,13 @@
                             <div class="filter" ng-if="feat.typeMeasure == 2">
                                 <h4>{{feat.name}} {{feat.textMeasure}}</h4>
 
+                                <div ng-if="test.tipo < 3" style="margin-top:50px"></div>
+
                                 <div class="radio" ng-repeat="opt in feat.optionValues">
                                     <label>
-                                        <input type="radio" ng-model="feat.filterValue" value="{{opt.id}}">{{opt.valueOption}}
+                                        <input type="radio" ng-model="feat.filterValue" value="{{opt.id}}" readonly="readonly">{{opt.valueOption}}
                                     </label>
+                                    <div ng-if="test.tipo < 3" style="margin-top:40px"></div>
                                 </div>
                             </div>
 
@@ -70,10 +76,16 @@
                             <div class="filter" ng-if="feat.typeMeasure == 3">
                                 <h4>{{feat.name}} <br/>(em grau de Importância)</h4>
 
-                                <div class="radio"><label><input type="radio">Não é importante</label></div>
-                                <div class="radio"><label><input type="radio">É um pouco Importante</label></div>
-                                <div class="radio"><label><input type="radio">É muito importante</label></div>
-                                <div class="radio"><label><input type="radio">É essencial</label></div>
+                                <div ng-if="test.tipo < 3" style="margin-top:50px"></div>
+
+                                <div class="radio"><label><input type="radio" readonly="readonly">Sem importância</label></div>
+                                <div ng-if="test.tipo < 3" style="margin-top:40px"></div>
+                                <div class="radio"><label><input type="radio" readonly="readonly">Pouco Importante</label></div>
+                                <div ng-if="test.tipo < 3" style="margin-top:40px"></div>
+                                <div class="radio"><label><input type="radio" readonly="readonly">Muito Importante</label></div>
+                                <div ng-if="test.tipo < 3" style="margin-top:40px"></div>
+                                <div class="radio"><label><input type="radio" readonly="readonly">Essencial</label></div>
+                                <div ng-if="test.tipo < 3" style="margin-top:40px"></div>
                             </div>
                         </li>
                     </ul>

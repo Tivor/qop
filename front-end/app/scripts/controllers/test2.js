@@ -11,7 +11,7 @@ angular.module('qopApp')
 
         $scope.filterName = ['A', 'B', 'C'];
 
-        $scope.allFilters = [[], [], []];
+        $scope.allFilters = [{tipo: 1, values : []}, {tipo: 2, values : []}, {tipo: 3, values : []}];
 
         $scope.getValues = function(valores){
 
@@ -42,15 +42,15 @@ angular.module('qopApp')
 
             if ($scope.idcat > 0) {
                 Test.getFeatures({idcat: $scope.idcat, testcase: 1}, function(response){
-                    $scope.allFilters[0] = response;
+                    $scope.allFilters[0].values = response;
                 });
 
                 Test.getFeatures({idcat: $scope.idcat, testcase: 2}, function(response){
-                    $scope.allFilters[1] = response;
+                    $scope.allFilters[1].values = response;
                 });
 
                 Test.getFeatures({idcat: $scope.idcat, testcase: 3}, function(response){
-                    $scope.allFilters[2] = response;
+                    $scope.allFilters[2].values = response;
                 });
             }
         }
